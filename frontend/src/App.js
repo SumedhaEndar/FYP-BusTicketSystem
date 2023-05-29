@@ -6,6 +6,7 @@ import Footer from './components/organisms/Footer'
 import Home from './pages/Home'
 import CustomerRegister from './pages/CustomerRegister'
 import CustomerLogin from './pages/CustomerLogin'
+import CustomerDashProfile from './pages/CustomerDashProfile'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/customer-register' element={<CustomerRegister />} />
         <Route path='/customer-login' element={<CustomerLogin />} />
+        <Route path='/customer-dash-profile' element={<CustomerDashProfile />} />
       </Routes>
       <Footer />
     </BrowserRouter>

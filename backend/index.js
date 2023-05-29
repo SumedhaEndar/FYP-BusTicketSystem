@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const mysql_MBS = require('./database/database')
 const customerRoutes = require('./routes/customer')
+const customerDashboardRoutes = require('./routes/customerDashboard')
 
 
 // express app
@@ -19,6 +20,7 @@ app.use((req, res, next)=>{
 
 // routes
 app.use('/api/customers',customerRoutes)
+app.use('/api/customerDashboard',customerDashboardRoutes)
 
 
 // Connect to the MySQL database
