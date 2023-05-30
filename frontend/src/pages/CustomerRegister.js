@@ -8,7 +8,7 @@ import {
     FormErrorMessage,
     useToast
 } from "@chakra-ui/react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useFormik } from "formik"
 import Axios from "axios";
 import { useAuthContext } from '../hooks/useAuthContext'
@@ -20,6 +20,7 @@ import { customerRegisterSchema } from "../schemas/customerSchema"
 function CustomerRegister() {
     const toast = useToast()
     const {dispatch} = useAuthContext()
+    const navigate = useNavigate()
     const {values, errors, touched, handleBlur, handleChange, handleSubmit} = useFormik({
         initialValues: {
             name: "",
@@ -43,6 +44,7 @@ function CustomerRegister() {
                 });
                 localStorage.setItem('user', JSON.stringify(data))
                 dispatch({type: 'LOGIN', payload: data})
+                navigate('/customer-dash-profile')
             }
             catch(error) {
                 console.log("Error")

@@ -1,6 +1,6 @@
 const express = require('express')
 const {
-    updateCustomer
+    updateProfile
 } = require('../controllers/customerDashboardController')
 const requireAuth = require('../middleware/requireAuth')
 
@@ -9,7 +9,7 @@ const router = express.Router()
 router.use(requireAuth)
 
 // Update Customer Profile
-router.put('/update/:id', updateCustomer)
+router.put('/update/:id', updateProfile)
 
 
 module.exports = router

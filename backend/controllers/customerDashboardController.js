@@ -6,7 +6,7 @@ const {
 
 
 // Update Customer Profile
-const updateCustomer = (req, res) => {
+const updateProfile = (req, res) => {
     const { id } = req.params
     const {
         name,
@@ -66,5 +66,5 @@ const updateCustomer = (req, res) => {
 }
 
 module.exports = {
-    updateCustomer
+    updateProfile
 }
