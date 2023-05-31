@@ -36,7 +36,11 @@ const loginCustomer = async(req, res) => {
             if(isPasswordMatch) {
                 const token = jwtCreateToken(result[0].customer_id)
                 // Passwords match, login successful
-                res.status(200).json({name: result[0].customer_name, email: email, token: token})
+                res.status(200).json({
+                    name: result[0].customer_name, 
+                    email: email, 
+                    id: result[0].customer_id,
+                    token: token})
             }
             else {
                 // Passwords do not match
@@ -101,7 +105,12 @@ const registerCustomer = async(req, res) => {
                         const token = jwtCreateToken(id)
 
                         // res.status(200).json({customer_id, customer_email, token})
-                        res.status(200).json({name:name, email: email, token: token})
+                        res.status(200).json({
+                            name:name, 
+                            email: email,
+                            id: result.insertId, 
+                            token: token
+                        })
                     }
                 )
             }

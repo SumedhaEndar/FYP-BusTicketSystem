@@ -110,7 +110,7 @@ function CustomerRegister() {
                         />
                         <FormErrorMessage>{errors.mobile}</FormErrorMessage>
                     </FormControl>
-                    <FormControl mb="20px">
+                    <FormControl mb="20px" isRequired isInvalid={errors.password && touched.password}>
                         <MyFormLabel htmlFor="password" color="fypBlue.1" mb="0px">Password</MyFormLabel>
                         <Input
                             id="password"

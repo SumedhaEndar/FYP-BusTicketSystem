@@ -38,3 +38,31 @@ export const customerLoginSchema = yup.object().shape({
         .min(5)
         .required("Required"),
 })
+
+// Profile
+export const customerProfileSchema = yup.object().shape({
+    name: yup
+        .string()
+        .required("Required"),
+    email: yup
+        .string()
+        .email("Please enter a valid email")
+        .required("Required"),
+    mobile: yup
+        .string()
+        .matches(phonePattern, {message: "Phone number is not valid"})
+        .required("Required"),
+    oldPassword: yup
+        .string(),
+        // .matches(passwordRules, {message: "No match password pattern"}),
+        // .required("Required"),
+    newPassword: yup
+        .string()
+        .min(5,'Password must be at least 5 characters')
+        .matches(passwordRules, {message: "Please create a stronger password"}),
+        // .required("Required"),
+    confirmPassword: yup
+        .string()
+        .oneOf([yup.ref('newPassword'), null],"Passwords must match")
+        // .required("Required")
+})
