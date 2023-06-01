@@ -1,23 +1,22 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { useAuthContext } from './hooks/useAuthContext'
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom'
+import CustomerRoutes from './utils/CustomerRoutes'
 
 // import pages & components
 import Navbar from './components/organisms/Navbar'
 import Footer from './components/organisms/Footer'
 import Home from './pages/Home'
+import CustomerNavbar from './components/organisms/CustomerNavbar'
 import CustomerRegister from './pages/CustomerRegister'
 import CustomerLogin from './pages/CustomerLogin'
 import CustomerDashProfile from './pages/CustomerDashProfile'
-import CustomerRoutes from './utils/CustomerRoutes'
+import CustomerDashBooking from './pages/CustomerDashBooking'
 
 function App() {
-  const { user } = useAuthContext()
-  console.log(user)
+
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
-
         <Route 
           path='/' 
           element={<Home />} 
@@ -30,14 +29,21 @@ function App() {
           path='/customer-login' 
           element={<CustomerLogin />} 
         />
-
-        <Route element={<CustomerRoutes/>}>
+        <Route element={<CustomerRoutes />}>
+          {/* Secondary Navbar */}
           <Route 
-            path='/customer-dash-profile'
-            element={<CustomerDashProfile />}
-          />
+            path='/*'
+            element={
+              <>
+                <CustomerNavbar />
+                <Outlet />
+              </>
+            }
+          >
+            <Route path="customer-dash-profile" element={<CustomerDashProfile />} />
+            <Route path="customer-dash-booking" element={<CustomerDashBooking />} />
+          </Route>
         </Route>
-
       </Routes>
       <Footer />
     </BrowserRouter>

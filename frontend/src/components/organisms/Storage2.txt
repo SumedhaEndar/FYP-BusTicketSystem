@@ -1,0 +1,39 @@
+<Flex as="nav">
+    <Box as="ul" listStyleType="none">
+        <li>
+        <Text
+            as={RouterLink}
+            to="/customer-dash-booking"
+            display="inline-block"
+            px={4}
+            py={2}
+            bg={isActive('/customer-dash-booking') ? navItemBgColor : 'transparent'}
+            color={isActive('/customer-dash-booking') ? navItemColor : navItemHoverColor}
+            _hover={{
+            bg: navItemHoverBgColor,
+            color: navItemHoverColor,
+            }}
+        >
+            Booking
+        </Text>
+        </li>
+        <li>
+        <Text
+            as={RouterLink}
+            to="/customer-dash-profile"
+            display="inline-block"
+            px={4}
+            py={2}
+            bg={isActive('/customer-dash-profile') ? navItemBgColor : 'transparent'}
+            color={isActive('/customer-dash-profile') ? navItemColor : navItemHoverColor}
+            _hover={{
+            bg: navItemHoverBgColor,
+            color: navItemHoverColor,
+            }}
+        >
+            Profile
+        </Text>
+        </li>
+        {/* Add more navbar items */}
+    </Box>
+</Flex>

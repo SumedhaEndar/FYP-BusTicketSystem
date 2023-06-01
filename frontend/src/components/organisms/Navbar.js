@@ -66,7 +66,7 @@ function Navbar() {
                         </PopoverTrigger>
                         <PopoverContent  w="200px">
                             <PopoverBody >
-                                <Button w="100%" colorScheme='blue'>Dashboard</Button>
+                                <Button as={Link} w="100%" colorScheme='blue' to="/customer-dash-booking">Dashboard</Button>
                             </PopoverBody>
                             <PopoverBody>
                                 <Button w="100%" colorScheme='blue' onClick={handleLogout}>Logout</Button>

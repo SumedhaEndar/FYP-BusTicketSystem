@@ -1,0 +1,22 @@
+<Flex 
+    as="header" 
+    alignItems="center" 
+    p="0px 15px 0px 10px" boxShadow='xl' border="1px" borderColor='gray.300' m="0px 2px 3px 2px">
+    <HStack spacing="20px" height="auto">
+        <Avatar size='md' name={'Oshigaki Kisame'} mx="20px"/>
+        <Flex 
+            as="li" w="100px" h="50px" py="30px"
+            alignItems="center" justifyContent="center"
+            _hover={{ backgroundColor: 'fypBlue.2', color: 'white' }}
+            fontWeight="bold"
+        >
+            Booking
+        </Flex>
+        <Box  as="li" py="30px" bg="fypBlue.2" w="100px" height="50px" display="flex" alignItems="center" justifyContent="center">
+            <Text>Booking</Text>
+        </Box>
+        <Box>
+            <Text>Booking</Text>
+        </Box>
+    </HStack>
+</Flex>

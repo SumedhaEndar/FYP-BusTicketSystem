@@ -59,7 +59,7 @@ function CustomerRegister() {
             }
         }
     })
-    return(
+    return(        
         <Flex bg="fypBG.2" pt="20px" pb="40px" alignItems="center" direction="column">
             <SectionTitle textAlign="center" mb="0.75rem">Customer Register</SectionTitle>
             <Box bg="fypBG.1" px="40px" mb="10px" py="30px" rounded="lg" boxShadow='md' w="380px">
