@@ -33,7 +33,7 @@ function CustomerDashProfile() {
                 if(values.oldPassword === undefined){
                     values.oldPassword = ""
                 }
-                await Axios.put(`api/customerDashboard/profile/${user.id}`, values, {
+                await Axios.put(`api/customerDashboard/profile`, values, {
                     headers: {
                         'Authorization': `Bearer ${user.token}`
                     }
@@ -84,7 +84,7 @@ function CustomerDashProfile() {
 
     useEffect(()=>{
         const getProfile = async()=>{
-            const response = await Axios.get(`api/customerDashboard/profile/${user.id}`,{
+            const response = await Axios.get(`api/customerDashboard/profile`,{
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }

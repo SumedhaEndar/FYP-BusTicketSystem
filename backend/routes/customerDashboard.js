@@ -10,10 +10,10 @@ const router = express.Router()
 router.use(requireAuth)
 
 // Get Customer Profile
-router.get('/profile/:id', getProfile)
+router.get('/profile', getProfile)
 
 // Update a customer profile
-router.put('/profile/:id', updateProfile)
+router.put('/profile', updateProfile)
 
 
 

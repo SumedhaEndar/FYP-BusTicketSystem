@@ -7,33 +7,30 @@ const {
 
 // Get a Customer Profile
 const getProfile = (req, res) => {
-    const {id} = req.params
-    if(+id === req.user_id){
-        mysql_MBS.query(
-            "SELECT * FROM customers WHERE customer_id = ?",
-            [id],
-            (err, result)=>{
-                if(err) {
-                    res.status(500).json({message: 'Error ID'});
-                    return
-                }
-                res.status(200).json({
-                    name: result[0].customer_name,
-                    email: result[0].customer_email,
-                    mobile: result[0].customer_contact,
-                });
-    
+    const id = req.user_id
+    console.log(id)
+    mysql_MBS.query(
+        "SELECT * FROM customers WHERE customer_id = ?",
+        [id],
+        (err, result)=>{
+            if(err) {
+                res.status(500).json({message: 'Error ID'});
+                return
             }
-        )
-    }
-    else {
-        res.status(500).json({message: 'No authorize'});
-    }
+            res.status(200).json({
+                name: result[0].customer_name,
+                email: result[0].customer_email,
+                mobile: result[0].customer_contact,
+            });
+
+        }
+    )
+
 }
 
 // Update Customer Profile
 const updateProfile = (req, res) => {
-    const { id } = req.params
+    const id  = req.user_id
     const {
         name,
         email,
@@ -41,10 +38,6 @@ const updateProfile = (req, res) => {
         oldPassword,
         newPassword
     } = req.body
-    
-    if(+id !== req.user_id) {
-        return res.status(500).json({message: 'No authorize'});
-    }
 
     if(oldPassword === ""){
         mysql_MBS.query(

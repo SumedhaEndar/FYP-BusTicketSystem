@@ -39,8 +39,9 @@ const loginCustomer = async(req, res) => {
                 res.status(200).json({
                     name: result[0].customer_name, 
                     email: email, 
-                    id: result[0].customer_id,
-                    token: token})
+                    // id: result[0].customer_id,
+                    token: token
+                })
             }
             else {
                 // Passwords do not match
@@ -108,7 +109,7 @@ const registerCustomer = async(req, res) => {
                         res.status(200).json({
                             name:name, 
                             email: email,
-                            id: result.insertId, 
+                            // id: result.insertId, 
                             token: token
                         })
                     }

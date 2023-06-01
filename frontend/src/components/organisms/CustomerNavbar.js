@@ -22,7 +22,7 @@ function CustomerNavbar(){
             as="nav" alignItems="center" p="0px 20px"  m="0px 2px 3px 2px"
             boxShadow='xl' border="1px" borderColor='gray.300'>
             <HStack spacing="30px" height="auto">
-                <Avatar size='md' name={'Oshigaki Kisame'} mx="20px"/>
+                <Avatar size='md' name={'Oshigaki Kisame'} ml="30px"/>
                 <HStack as="ul" listStyleType="none" >
                     <li>
                         <Text
@@ -63,10 +63,8 @@ function CustomerNavbar(){
                         </Text>
                     </li>
                 </HStack>
-                
                 <Text fontWeight="bold" color="fypBlue.2">Enrich Points: 250 </Text>
                 <Text fontWeight="bold" color="fypBlue.2">Refund Tokens: RM 25</Text>
-                
             </HStack>
         </Flex>
     )
