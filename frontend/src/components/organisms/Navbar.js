@@ -26,6 +26,17 @@ function Navbar() {
     const { logout } = useLogout()
     const { user } = useAuthContext()
 
+    let whichDashboard
+    if(user){
+        switch (user.role) {
+            case "Admin":
+                whichDashboard = '/admin-dash-profile'
+                break
+            default :
+                whichDashboard = '/customer-dash-booking'
+        }
+    }
+
     const handleLogout = () => {
         logout()
     }
@@ -66,7 +77,7 @@ function Navbar() {
                         </PopoverTrigger>
                         <PopoverContent  w="200px">
                             <PopoverBody >
-                                <Button as={Link} w="100%" colorScheme='blue' to="/customer-dash-booking">Dashboard</Button>
+                                <Button as={Link} w="100%" colorScheme='blue' to={whichDashboard}>Dashboard</Button>
                             </PopoverBody>
                             <PopoverBody>
                                 <Button w="100%" colorScheme='blue' onClick={handleLogout}>Logout</Button>

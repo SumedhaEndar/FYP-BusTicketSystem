@@ -20,7 +20,7 @@ const CustomerRoutes = () => {
     }
 
     return(
-        user ? <Outlet/> : <Navigate to="/customer-login"/>
+        (user && user.role === "Customer") ? <Outlet/> : <Navigate to="/customer-login"/>
     )
 }
 

@@ -1,10 +1,11 @@
 const mysql_MBS =  require('../database/database')
 const {
     hashPassword,
-    // comparePasswords
+    comparePasswords
 } = require('../utilities/bcryptHash')
 
 
+/*-----------------------------------------------------------------------------------------*/
 // Add an employee
 const addEmployee = async(req, res) => {
     const {
@@ -91,10 +92,100 @@ const deleteEmployee = (req, res) => {
         }
     )
 }
+/*-----------------------------------------------------------------------------------------*/
+
+
+/*-----------------------------------------------------------------------------------------*/
+// Get an Employee Profile
+const getEmployeeProfile = (req, res) => {
+    const id = req.user_id
+    console.log(id)
+    mysql_MBS.query(
+        "SELECT * FROM employees WHERE employee_id = ?",
+        [id],
+        (err, result)=>{
+            if(err) {
+                res.status(500).json({message: 'Error ID'});
+                return
+            }
+            res.status(200).json({
+                name: result[0].employee_name,
+                email: result[0].employee_email,
+                mobile: result[0].employee_contact,
+            });
+        }
+    )
+}
+
+// Update Customer Profile
+const updateEmployeeProfile = (req, res) => {
+    const id  = req.user_id
+    const {
+        name,
+        email,
+        mobile,
+        oldPassword,
+        newPassword
+    } = req.body
+
+    if(oldPassword === ""){
+        mysql_MBS.query(
+            "UPDATE employees SET employee_name = ?, employee_email = ?, employee_contact = ? WHERE employee_id = ?",
+            [name, email, mobile, id],
+            (err, result)=>{
+                if(err){
+                    res.status(500).json({ error: 'Error updating employee', err });
+                }
+                else {
+                    res.status(200).json({message: "Employee Updating Successful"});
+                }
+            }
+        )
+    }
+
+    else {
+        mysql_MBS.query(
+            "SELECT employee_password FROM employees WHERE employee_id = ?",
+            [id],
+            async (err, result)=>{
+                if(err){
+                    res.status(500).json({ error: 'Error retreive the old password when updating employee' });
+                    return
+                }
+    
+                const hashedPassword = result[0].employee_password
+                const isPasswordMatch = await comparePasswords(oldPassword, hashedPassword)
+    
+                if(isPasswordMatch) {
+                    const hashedPassword = await hashPassword(newPassword)
+                    mysql_MBS.query(
+                        "UPDATE employees SET employee_name = ?, employee_email = ?, employee_contact = ?, employee_password = ? WHERE employee_id = ?",
+                        [name, email, mobile, hashedPassword, id],
+                        (err, result)=>{
+                            if(err){
+                                res.status(500).json({ error: 'Error updating employee' });
+                            }
+                            else {
+                                res.status(200).json({ message: 'Employee updated successfully' });
+                            }
+                        }
+                    )
+                }
+                else {
+                    // Passwords do not match
+                    res.status(401).json({ error: 'Invalid password' });
+                }
+            }
+        )
+    }  
+}
+/*-----------------------------------------------------------------------------------------*/
 
 
 module.exports = {
     addEmployee,
     deleteEmployee,
-    getEmployees
+    getEmployees,
+    getEmployeeProfile,
+    updateEmployeeProfile
 }
