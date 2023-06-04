@@ -4,6 +4,8 @@ const express = require('express')
 const mysql_MBS = require('./database/database')
 const customerRoutes = require('./routes/customer')
 const customerDashboardRoutes = require('./routes/customerDashboard')
+const adminDashboardRoutes = require('./routes/adminDashboard')
+const adminRoutes = require('./routes/admin')
 
 
 // express app
@@ -21,6 +23,8 @@ app.use((req, res, next)=>{
 // routes
 app.use('/api/customers',customerRoutes)
 app.use('/api/customerDashboard',customerDashboardRoutes)
+app.use('/api/admins',adminRoutes)
+app.use('/api/adminDashboard',adminDashboardRoutes)
 
 
 // Connect to the MySQL database

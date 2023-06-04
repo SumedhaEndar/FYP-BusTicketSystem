@@ -8,7 +8,8 @@ import {
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { useAuthContext } from "../../hooks/useAuthContext";
 
-function CustomerNavbar(){
+
+function AdminNavbar(){
     const { user } = useAuthContext()
     const location = useLocation();
     const isActive = (pathname) => location.pathname === pathname;
@@ -28,33 +29,33 @@ function CustomerNavbar(){
                     <li>
                         <Text
                             as={RouterLink}
-                            to="/customer-dash-booking"
+                            to="/admin-dash-employee"
                             textAlign="center"
                             p={4}
                             w="121px"
                             fontWeight="bold"
                             display="inline-block"
-                            bg={isActive('/customer-dash-booking') ? navItemBgColor : 'transparent'}
-                            color={isActive('/customer-dash-booking') ? navItemColor : 'fypBlue.2'}
+                            bg={isActive('/admin-dash-employee') ? navItemBgColor : 'transparent'}
+                            color={isActive('/admin-dash-employee') ? navItemColor : 'fypBlue.2'}
                             _hover={{
                                 bg: navItemHoverBgColor,
                                 color: navItemHoverColor,
                             }}
                         >
-                            Booking
+                            Employee
                         </Text>
                     </li>
                     <li>
                         <Text
                             as={RouterLink}
-                            to="/customer-dash-profile"
+                            to="/admin-dash-profile"
                             textAlign="center"
                             p={4}
                             w="121px"
                             fontWeight="bold"
                             display="inline-block"
-                            bg={isActive('/customer-dash-profile') ? navItemBgColor : 'transparent'}
-                            color={isActive('/customer-dash-profile') ? navItemColor : 'fypBlue.2'}
+                            bg={isActive('/admin-dash-profile') ? navItemBgColor : 'transparent'}
+                            color={isActive('/admin-dash-profile') ? navItemColor : 'fypBlue.2'}
                             _hover={{
                                 bg: navItemHoverBgColor,
                                 color: navItemHoverColor,
@@ -64,11 +65,9 @@ function CustomerNavbar(){
                         </Text>
                     </li>
                 </HStack>
-                <Text fontWeight="bold" color="fypBlue.2">Enrich Points: 0 </Text>
-                <Text fontWeight="bold" color="fypBlue.2">Refund Tokens: RM 0</Text>
             </HStack>
         </Flex>
     )
 }
 
-export default CustomerNavbar
+export default AdminNavbar

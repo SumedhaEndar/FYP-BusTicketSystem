@@ -39,6 +39,7 @@ const loginCustomer = async(req, res) => {
                 res.status(200).json({
                     name: result[0].customer_name, 
                     email: email, 
+                    role: "Customer",
                     // id: result[0].customer_id,
                     token: token
                 })
@@ -109,6 +110,7 @@ const registerCustomer = async(req, res) => {
                         res.status(200).json({
                             name:name, 
                             email: email,
+                            role: "Customer",
                             // id: result.insertId, 
                             token: token
                         })
