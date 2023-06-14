@@ -48,6 +48,25 @@ function AdminNavbar(){
                     <li>
                         <Text
                             as={RouterLink}
+                            to="/admin-dash-feedback"
+                            textAlign="center"
+                            p={4}
+                            w="121px"
+                            fontWeight="bold"
+                            display="inline-block"
+                            bg={isActive('/admin-dash-feedback') ? navItemBgColor : 'transparent'}
+                            color={isActive('/admin-dash-feedback') ? navItemColor : 'fypBlue.2'}
+                            _hover={{
+                                bg: navItemHoverBgColor,
+                                color: navItemHoverColor,
+                            }}
+                        >
+                            Feedback
+                        </Text>
+                    </li>
+                    <li>
+                        <Text
+                            as={RouterLink}
                             to="/admin-dash-profile"
                             textAlign="center"
                             p={4}

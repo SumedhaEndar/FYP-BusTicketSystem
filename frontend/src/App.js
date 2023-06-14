@@ -15,6 +15,8 @@ import AdminNavbar from './components/organisms/AdminNavbar'
 import AdminLogin from './pages/AdminLogin'
 import AdminDashProfile from './pages/AdminDashProfile'
 import AdminDashEmployee from './pages/AdminDashEmployee'
+import AskMB from './pages/AskMB'
+import AdminDashFeedback from './pages/AdminDashFeedback'
 
 function App() {
 
@@ -26,6 +28,10 @@ function App() {
         <Route 
           path='/' 
           element={<Home />} 
+        />
+        <Route 
+          path='/askMB' 
+          element={<AskMB />} 
         />
         <Route 
           path='/customer-register' 
@@ -67,6 +73,7 @@ function App() {
           >
             <Route path="admin-dash-employee" element={<AdminDashEmployee />} />
             <Route path="admin-dash-profile" element={<AdminDashProfile />} />
+            <Route path="admin-dash-feedback" element={<AdminDashFeedback />} />
           </Route>
         </Route>
       </Routes>
