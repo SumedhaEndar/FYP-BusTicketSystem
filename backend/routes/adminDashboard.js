@@ -4,7 +4,9 @@ const {
     deleteEmployee,
     getEmployees,
     getEmployeeProfile,
-    updateEmployeeProfile
+    updateEmployeeProfile,
+    getFeedback,
+    deleteFeedback
 } = require('../controllers/adminDashboardController')
 const requireAuth = require('../middleware/requireAuth')
 
@@ -12,15 +14,17 @@ const router = express.Router()
 
 router.use(requireAuth)
 
-// Add an Admin
+// Admin Dash Employee
 router.post('/employees', addEmployee)
 router.get('/employees', getEmployees)
 router.delete('/employees/:id', deleteEmployee)
 
-// Update an Admin Profile
+// Admin Dash Profile
 router.get('/employee/profile', getEmployeeProfile)
 router.put('/employee/profile', updateEmployeeProfile)
 
-
+// Admin Dash Feedback
+router.get('/feedback',getFeedback)
+router.delete('/feedback/:id', deleteFeedback)
 
 module.exports = router

@@ -164,69 +164,8 @@ const createFeedback = (req, res) => {
 }
 
 
-// Get Feedback
-const getFeedback = (req, res) => {
-    const page = parseInt(req.query.page) || 1  
-    const limit = 1
-    const offset = (page - 1)*limit
-
-    // Execute first query
-    mysql_MBS.query(
-        "SELECT COUNT(*) as total_count FROM feedback",
-        (err, countResult) => {
-            if(err) {
-                throw err
-            }
-
-            const totalCount = countResult[0].total_count
-    
-            // Execute second query
-            mysql_MBS.query(
-                "SELECT * FROM feedback LIMIT ? OFFSET ?",
-                [limit, offset],
-                (err, dataResult) => {
-                    if(err){
-                        throw err
-                    }
-                    
-                    const response = {
-                        currentPage: page,
-                        totalPages: Math.ceil(totalCount/limit),
-                        totalCount: totalCount,
-                        items: dataResult
-                    }
-
-                    res.status(200).json(response)
-                }
-            )
-        }
-    )
-}
-
-
-// Delete Feedback
-const deleteFeedback = (req, res) => {
-    const { id } = req.params
-
-    mysql_MBS.query(
-        'DELETE FROM feedback WHERE feedback_id = ?',
-        [id],
-        (err, result) => {
-            if(err){
-                res.status(500).json({message: 'Error deleting feedback'});
-                return;
-            }
-
-            res.status(200).json(result)
-        }
-    )
-}
-
-
 module.exports = {
     registerCustomer,
     loginCustomer,
     createFeedback,
-    getFeedback,
-    deleteFeedback
 }

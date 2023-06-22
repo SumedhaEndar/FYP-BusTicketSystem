@@ -5,8 +5,7 @@ const {
 } = require('../utilities/bcryptHash')
 
 
-/*-----------------------------------------------------------------------------------------*/
-// Add an employee
+/*------------------------------- Admin Dash Employee --------------------------------------*/
 const addEmployee = async(req, res) => {
     const {
         name,
@@ -61,7 +60,6 @@ const addEmployee = async(req, res) => {
     }
 }
 
-// Get all employees
 const getEmployees = (req, res) => {
     mysql_MBS.query(
         "SELECT * FROM employees",
@@ -75,7 +73,6 @@ const getEmployees = (req, res) => {
     )
 }
 
-// Delete an employee
 const deleteEmployee = (req, res) => {
     const { id } = req.params
 
@@ -95,8 +92,7 @@ const deleteEmployee = (req, res) => {
 /*-----------------------------------------------------------------------------------------*/
 
 
-/*-----------------------------------------------------------------------------------------*/
-// Get an Employee Profile
+/*------------------------------- Admin Dash Profile --------------------------------------*/
 const getEmployeeProfile = (req, res) => {
     const id = req.user_id
     console.log(id)
@@ -117,7 +113,6 @@ const getEmployeeProfile = (req, res) => {
     )
 }
 
-// Update Customer Profile
 const updateEmployeeProfile = (req, res) => {
     const id  = req.user_id
     const {
@@ -182,10 +177,70 @@ const updateEmployeeProfile = (req, res) => {
 /*-----------------------------------------------------------------------------------------*/
 
 
+/*------------------------------- Admin Dash Feedback -------------------------------------*/
+const getFeedback = (req, res) => {
+    const page = parseInt(req.query.page) || 1  
+    const limit = 1
+    const offset = (page - 1)*limit
+
+    // Execute first query
+    mysql_MBS.query(
+        "SELECT COUNT(*) as total_count FROM feedback",
+        (err, countResult) => {
+            if(err) {
+                throw err
+            }
+
+            const totalCount = countResult[0].total_count
+    
+            // Execute second query
+            mysql_MBS.query(
+                "SELECT * FROM feedback LIMIT ? OFFSET ?",
+                [limit, offset],
+                (err, dataResult) => {
+                    if(err){
+                        throw err
+                    }
+                    
+                    const response = {
+                        currentPage: page,
+                        totalPages: Math.ceil(totalCount/limit),
+                        totalCount: totalCount,
+                        items: dataResult
+                    }
+
+                    res.status(200).json(response)
+                }
+            )
+        }
+    )
+}
+
+const deleteFeedback = (req, res) => {
+    const { id } = req.params
+
+    mysql_MBS.query(
+        'DELETE FROM feedback WHERE feedback_id = ?',
+        [id],
+        (err, result) => {
+            if(err){
+                res.status(500).json({message: 'Error deleting feedback'});
+                return;
+            }
+
+            res.status(200).json(result)
+        }
+    )
+}
+/*-----------------------------------------------------------------------------------------*/
+
+
 module.exports = {
     addEmployee,
     deleteEmployee,
     getEmployees,
     getEmployeeProfile,
-    updateEmployeeProfile
+    updateEmployeeProfile,
+    getFeedback,
+    deleteFeedback
 }

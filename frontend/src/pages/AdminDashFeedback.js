@@ -13,8 +13,10 @@ import { useState, useEffect } from "react";
 import ReactPaginate from 'react-paginate'
 import FormHeader from "../components/molecules/FormHeader";
 import Axios from "axios";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 function AdminDashFeedback(){
+    const { user } = useAuthContext()
     const [pageSelected, setPageSelected] = useState(0)
     const [feedbackReviewItem, setFeedbackReviewItem] = useState({})
     const [totalPage, setTotalPage] = useState(0)
@@ -24,15 +26,29 @@ function AdminDashFeedback(){
     };
 
     const handleClick = async() => {
-        await Axios.delete(`/api/customers/feedback/${feedbackReviewItem.feedback_id}`)
-        setPageSelected((prevPage)=> prevPage-1)
-        // console.log(pageSelected)
-        // console.log(totalPage)
+        await Axios.delete(`/api/adminDashboard/feedback/${feedbackReviewItem.feedback_id}`,{
+            headers:{
+                'Authorization': `Bearer ${user.token}`
+            } 
+        })
+
+        if(pageSelected === 0){
+            setPageSelected((0))
+        }
+        else {
+            setPageSelected((prev)=>prev-1)
+        }
+        
+        setTotalPage((prev)=>prev-1)
     }
 
     useEffect(()=>{
         const fetchFeedback = async() => {
-            const response = await Axios.get( `/api/customers/feedback?page=${pageSelected+1}`)
+            const response = await Axios.get( `/api/adminDashboard/feedback?page=${pageSelected+1}`, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
             const {data} = response
 
             setFeedbackReviewItem(data.items[0])
@@ -40,7 +56,7 @@ function AdminDashFeedback(){
 
         }
         fetchFeedback()
-    },[pageSelected, totalPage])
+    },[pageSelected, totalPage, user])
 
     /*------- Need to perfect this one ------*/
     if(feedbackReviewItem === undefined) {
