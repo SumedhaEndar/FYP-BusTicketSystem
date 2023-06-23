@@ -6,7 +6,8 @@ const {
     getEmployeeProfile,
     updateEmployeeProfile,
     getFeedback,
-    deleteFeedback
+    deleteFeedback,
+    addStation
 } = require('../controllers/adminDashboardController')
 const requireAuth = require('../middleware/requireAuth')
 
@@ -26,5 +27,8 @@ router.put('/employee/profile', updateEmployeeProfile)
 // Admin Dash Feedback
 router.get('/feedback',getFeedback)
 router.delete('/feedback/:id', deleteFeedback)
+
+// Admin Dash Others
+router.post('/stations', addStation)
 
 module.exports = router

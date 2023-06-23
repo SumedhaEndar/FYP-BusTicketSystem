@@ -235,6 +235,31 @@ const deleteFeedback = (req, res) => {
 /*-----------------------------------------------------------------------------------------*/
 
 
+/*------------------------------- Admin Dash Stations -------------------------------------*/
+const addStation = (req, res) => {
+    const {
+        name,
+        state,
+        address,
+        district
+    } = req.body
+
+    // Perform mysql query to insert the data to the database
+    mysql_MBS.query(
+        "INSERT INTO stations (station_name, station_district, station_state, station_address) VALUES (?,?,?,?)",
+        [name, district, state, address],
+        (err, result) => {
+            if(err){
+                res.status(500).json({error: err.message})
+            }
+            else {
+                res.status(200).json({message: `Added ${name}`});
+            }
+        }
+    )
+}
+/*-----------------------------------------------------------------------------------------*/
+
 module.exports = {
     addEmployee,
     deleteEmployee,
@@ -242,5 +267,6 @@ module.exports = {
     getEmployeeProfile,
     updateEmployeeProfile,
     getFeedback,
-    deleteFeedback
+    deleteFeedback,
+    addStation
 }
