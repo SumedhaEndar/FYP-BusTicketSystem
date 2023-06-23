@@ -115,7 +115,7 @@ function AddEmployeeForm() {
                             isRequired
                             isInvalid={touched.mobile && errors.mobile}
                         >
-                            <MyFormLabel htmlFor="name" color="fypBlue.1" mb="0px">Contact</MyFormLabel>
+                            <MyFormLabel htmlFor="mobile" color="fypBlue.1" mb="0px">Contact</MyFormLabel>
                             <Input 
                                 id="mobile"
                                 name="mobile"
