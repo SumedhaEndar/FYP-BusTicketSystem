@@ -17,6 +17,7 @@ import AdminDashProfile from './pages/AdminDashProfile'
 import AdminDashEmployee from './pages/AdminDashEmployee'
 import AskMB from './pages/AskMB'
 import AdminDashFeedback from './pages/AdminDashFeedback'
+import AdminDashOthers from './pages/AdminDashOthers'
 
 function App() {
 
@@ -74,6 +75,7 @@ function App() {
             <Route path="admin-dash-employee" element={<AdminDashEmployee />} />
             <Route path="admin-dash-profile" element={<AdminDashProfile />} />
             <Route path="admin-dash-feedback" element={<AdminDashFeedback />} />
+            <Route path="admin-dash-others" element={<AdminDashOthers />} />
           </Route>
         </Route>
       </Routes>

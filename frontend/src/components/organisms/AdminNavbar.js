@@ -83,6 +83,25 @@ function AdminNavbar(){
                             Profile
                         </Text>
                     </li>
+                    <li>
+                        <Text
+                            as={RouterLink}
+                            to="/admin-dash-others"
+                            textAlign="center"
+                            p={4}
+                            w="121px"
+                            fontWeight="bold"
+                            display="inline-block"
+                            bg={isActive('/admin-dash-others') ? navItemBgColor : 'transparent'}
+                            color={isActive('/admin-dash-others') ? navItemColor : 'fypBlue.2'}
+                            _hover={{
+                                bg: navItemHoverBgColor,
+                                color: navItemHoverColor,
+                            }}
+                        >
+                            Others
+                        </Text>
+                    </li>
                 </HStack>
             </HStack>
         </Flex>
