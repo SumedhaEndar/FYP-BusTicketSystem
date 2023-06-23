@@ -69,7 +69,7 @@ function AddStationForm(){
                             isRequired
                             isInvalid={touched.name && errors.name}
                         >
-                            <MyFormLabel htmlFor="name" color="fypBlue.1" mb="0px">Name</MyFormLabel>
+                            <MyFormLabel htmlFor="name" color="fypBlue.1" mb="0px">Station Name</MyFormLabel>
                             <Input 
                                 id="name"
                                 name="name"
@@ -87,7 +87,7 @@ function AddStationForm(){
                             isRequired
                             isInvalid={touched.state && errors.state}
                         >
-                            <MyFormLabel htmlFor="state" color="fypBlue.1" mb="0px">State</MyFormLabel>
+                            <MyFormLabel htmlFor="state" color="fypBlue.1" mb="0px">Station State</MyFormLabel>
                             <Select
                                 id="state"
                                 name="state"
@@ -121,7 +121,7 @@ function AddStationForm(){
                             isRequired
                             isInvalid={touched.district && errors.district}
                         >
-                            <MyFormLabel htmlFor="district" color="fypBlue.1" mb="0px">District</MyFormLabel>
+                            <MyFormLabel htmlFor="district" color="fypBlue.1" mb="0px">Station District</MyFormLabel>
                             <Input 
                                 id="district"
                                 name="district"
@@ -139,7 +139,7 @@ function AddStationForm(){
                             isRequired
                             isInvalid={touched.address && errors.address}
                         >
-                            <MyFormLabel htmlFor="address" color="fypBlue.1" mb="0px">Address</MyFormLabel>
+                            <MyFormLabel htmlFor="address" color="fypBlue.1" mb="0px">Station Address</MyFormLabel>
                             <Input 
                                 id="address"
                                 name="address"
