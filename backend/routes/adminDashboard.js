@@ -10,7 +10,9 @@ const {
     getFeedback,
     deleteFeedback,
     addStation,
-    addCarousel
+    addCarousel,
+    deleteCarousel,
+    getCarouselList
 } = require('../controllers/adminDashboardController')
 const requireAuth = require('../middleware/requireAuth')
 
@@ -46,5 +48,7 @@ const storage = multer.diskStorage({
   
 const upload = multer({ storage: storage });
 router.post('/carousels', upload.single('image'), addCarousel)
+router.delete('/carousels/:id', deleteCarousel)
+router.get('/carousels', getCarouselList)
 
 module.exports = router

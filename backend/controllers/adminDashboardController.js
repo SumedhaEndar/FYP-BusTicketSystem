@@ -3,7 +3,8 @@ const {
     hashPassword,
     comparePasswords
 } = require('../utilities/bcryptHash')
-const path = require('path');
+const path = require('path')
+const fs = require('fs');
 
 
 /*------------------------------- Admin Dash Employee --------------------------------------*/
@@ -236,7 +237,7 @@ const deleteFeedback = (req, res) => {
 /*-----------------------------------------------------------------------------------------*/
 
 
-/*------------------------------- Admin Dash Stations -------------------------------------*/
+/*------------------------------- Admin Dash Others -------------------------------------*/
 const addStation = (req, res) => {
     const {
         name,
@@ -281,6 +282,71 @@ const addCarousel = (req, res) => {
     )
 
 }
+
+const deleteCarousel = (req,res) =>{
+    const carouselId = req.params.id;
+
+    // Retrieve the image details from the database using the carouselId
+    mysql_MBS.query(
+        'SELECT * FROM carousels WHERE carousel_id = ?',
+        [carouselId],
+        (err, results)=>{
+            if(err) {
+                console.error(err);
+                res.status(500).json({ error: 'Failed to delete carousel' });
+            }
+            else{
+                if (results.length === 0) {
+                    res.status(404).json({ error: 'Image not found' });
+                }
+                else {
+                    const carouselImage = results[0];
+                    const carouselImagePath = path.join(__dirname, '../carousels', carouselImage.carousel_filename);
+
+                    // Delete the carousel image file from the server's storage
+                    fs.unlink(carouselImagePath, (err)=>{
+                        if(err){
+                            console.error(err)
+                            res.status(500).json({error: "Failed to delete carousel image"})
+                        }
+                        else {
+                            // Remove the carousel record from the database
+                            mysql_MBS.query(
+                                "DELETE FROM carousels WHERE carousel_id = ?",
+                                [carouselId],
+                                (err)=>{
+                                    if(err){
+                                        console.error(err)
+                                        res.status(500).json({error: 'Failed to delete carousel'})
+                                    }
+                                    else {
+                                        res.status(200).json({success: 'Carousel deleted successfully'})
+                                    }
+                                }
+                            )
+                        }
+                    })
+                }
+            } 
+        }
+    )
+}
+
+const getCarouselList = (req,res)=>{
+    // Retrieve all carousels info from the database
+    mysql_MBS.query(
+        'SELECT * FROM carousels',
+        (err, results)=>{
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Failed to fetch images' });
+            } 
+            else {
+                res.status(200).json(results);
+            }
+        }
+    )
+}
 /*-----------------------------------------------------------------------------------------*/
 
 module.exports = {
@@ -292,5 +358,7 @@ module.exports = {
     getFeedback,
     deleteFeedback,
     addStation,
-    addCarousel
+    addCarousel,
+    deleteCarousel,
+    getCarouselList
 }
