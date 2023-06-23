@@ -276,7 +276,12 @@ const addCarousel = (req, res) => {
                 res.status(500).json({error: 'Failed to upload image'})
             }
             else {
-                res.status(200).json({ success: 'Image uploaded successfully' });
+                res.status(200).json({
+                    carousel_id: result.insertId,
+                    carousel_name: carouselName,
+                    carousel_filename: originalname,
+                    carousel_url: imageUrl
+                });
             }
         }
     )
@@ -284,12 +289,12 @@ const addCarousel = (req, res) => {
 }
 
 const deleteCarousel = (req,res) =>{
-    const carouselId = req.params.id;
+    const id = req.params.id;
 
-    // Retrieve the image details from the database using the carouselId
+    // Retrieve the image details from the database using the id
     mysql_MBS.query(
         'SELECT * FROM carousels WHERE carousel_id = ?',
-        [carouselId],
+        [id],
         (err, results)=>{
             if(err) {
                 console.error(err);
@@ -313,14 +318,14 @@ const deleteCarousel = (req,res) =>{
                             // Remove the carousel record from the database
                             mysql_MBS.query(
                                 "DELETE FROM carousels WHERE carousel_id = ?",
-                                [carouselId],
+                                [id],
                                 (err)=>{
                                     if(err){
                                         console.error(err)
                                         res.status(500).json({error: 'Failed to delete carousel'})
                                     }
                                     else {
-                                        res.status(200).json({success: 'Carousel deleted successfully'})
+                                        res.status(200).json(id)
                                     }
                                 }
                             )
@@ -342,7 +347,7 @@ const getCarouselList = (req,res)=>{
                 res.status(500).json({ error: 'Failed to fetch images' });
             } 
             else {
-                res.status(200).json(results);
+                res.status(200).json({results});
             }
         }
     )
