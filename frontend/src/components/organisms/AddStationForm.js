@@ -7,13 +7,18 @@ import {
     Input, 
     Button,
     Select,
+    useToast
 } from "@chakra-ui/react"
 import FormHeader from "../molecules/FormHeader"
 import { MyFormLabel } from "../atoms/WorldwideText" 
 import { useFormik } from "formik"
 import { stationSchema } from "../../schemas/stationSchema"
+import Axios from "axios";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 function AddStationForm(){
+    const { user } = useAuthContext()
+    const toast = useToast()
     const {values, errors, touched, handleChange, handleSubmit} = useFormik({
         initialValues: {
             name: "",
@@ -22,7 +27,33 @@ function AddStationForm(){
             address: ""
         },
         validationSchema: stationSchema,
-        onSubmit: (values) => {
+        onSubmit: async (values, {resetForm}) => {
+            try {
+                await Axios.post("api/adminDashboard/stations", values, {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
+                toast({
+                    title: 'Successful',
+                    description: `Added ${values.name} Successful`,
+                    status: 'success',
+                    position: 'top-right',
+                    duration: 2000,
+                    isClosable: true,
+                });
+                resetForm()
+            }
+            catch(error){
+                toast({
+                    title: 'Error',
+                    description:  "Fail to add",
+                    status: 'error',
+                    position: 'top-right',
+                    duration: 2000,
+                    isClosable: true,
+                })
+            }
             console.log(values)
         }
     })
