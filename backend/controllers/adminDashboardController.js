@@ -3,6 +3,7 @@ const {
     hashPassword,
     comparePasswords
 } = require('../utilities/bcryptHash')
+const path = require('path');
 
 
 /*------------------------------- Admin Dash Employee --------------------------------------*/
@@ -258,6 +259,28 @@ const addStation = (req, res) => {
         }
     )
 }
+
+const addCarousel = (req, res) => {
+    const {carouselName} = req.body
+    const {originalname} =req.file
+    const imageUrl = `/carousels/${originalname}`;
+
+    // Save image details to the database
+    mysql_MBS.query(
+        "INSERT INTO carousels (carousel_name, carousel_filename, carousel_url) VALUES (?,?,?)",
+        [carouselName, originalname, imageUrl],
+        (err, result)=>{
+            if(err){
+                console.error(err)
+                res.status(500).json({error: 'Failed to upload image'})
+            }
+            else {
+                res.status(200).json({ success: 'Image uploaded successfully' });
+            }
+        }
+    )
+
+}
 /*-----------------------------------------------------------------------------------------*/
 
 module.exports = {
@@ -268,5 +291,6 @@ module.exports = {
     updateEmployeeProfile,
     getFeedback,
     deleteFeedback,
-    addStation
+    addStation,
+    addCarousel
 }

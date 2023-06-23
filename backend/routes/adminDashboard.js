@@ -1,4 +1,6 @@
 const express = require('express')
+const multer = require('multer');
+const path = require('path');
 const {
     addEmployee,
     deleteEmployee,
@@ -7,7 +9,8 @@ const {
     updateEmployeeProfile,
     getFeedback,
     deleteFeedback,
-    addStation
+    addStation,
+    addCarousel
 } = require('../controllers/adminDashboardController')
 const requireAuth = require('../middleware/requireAuth')
 
@@ -30,5 +33,18 @@ router.delete('/feedback/:id', deleteFeedback)
 
 // Admin Dash Others
 router.post('/stations', addStation)
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'carousels/'); // Specify the destination directory where the uploaded files should be stored
+    },
+    filename: function (req, file, cb) {
+        // const extension = path.extname(file.originalname);
+        const filename = file.originalname;
+      cb(null, filename);
+    }
+  });
+  
+const upload = multer({ storage: storage });
+router.post('/carousels', upload.single('image'), addCarousel)
 
 module.exports = router
