@@ -16,8 +16,10 @@ import AdminLogin from './pages/AdminLogin'
 import AdminDashProfile from './pages/AdminDashProfile'
 import AdminDashEmployee from './pages/AdminDashEmployee'
 import AskMB from './pages/AskMB'
+import AboutUs from './pages/AboutUs'
 import AdminDashFeedback from './pages/AdminDashFeedback'
 import AdminDashOthers from './pages/AdminDashOthers'
+import Enrich from './pages/Enrich'
 
 function App() {
 
@@ -29,6 +31,14 @@ function App() {
         <Route 
           path='/' 
           element={<Home />} 
+        />
+        <Route 
+          path='/enrich'
+          element={<Enrich />}
+        />
+        <Route 
+          path='/about-us'
+          element={<AboutUs />}
         />
         <Route 
           path='/askMB' 

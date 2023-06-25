@@ -61,7 +61,7 @@ function CreateFeedbackSection() {
     const errorBorderColor = useColorModeValue('gray.300', 'whiteAlpha.400');
     // console.log(errors)
     return(
-        <Box background="fypBG.2" pt="20px" pb="40px">
+        <Box background="fypBG.2" pt="20px" pb="40px" id="feedback">
             <SectionTitle textAlign="center" mb="1rem">Feedback to Us</SectionTitle>
             <form autoComplete="off" onSubmit={handleSubmit} noValidate>
                 <VStack width="45%" margin="auto" spacing="1rem">
