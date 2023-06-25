@@ -20,6 +20,7 @@ import AboutUs from './pages/AboutUs'
 import AdminDashFeedback from './pages/AdminDashFeedback'
 import AdminDashOthers from './pages/AdminDashOthers'
 import Enrich from './pages/Enrich'
+import Experience from './pages/Experience'
 
 function App() {
 
@@ -31,6 +32,10 @@ function App() {
         <Route 
           path='/' 
           element={<Home />} 
+        />
+        <Route 
+          path='/experience'
+          element={<Experience />}
         />
         <Route 
           path='/enrich'

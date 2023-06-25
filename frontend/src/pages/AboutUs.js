@@ -1,7 +1,7 @@
 import {
     VStack,
     Text,
-    Flex
+    Box
 } from "@chakra-ui/react"
 import HeroSection from "../components/organisms/HeroSection"
 import { SectionTitle } from "../components/atoms/WorldwideText"
@@ -16,8 +16,8 @@ function AboutUs(){
                 heroText1 = "Malaysia Buses System"
                 heroText2 = "Who are we and what we do"
             />
-            <Flex bg="fypBG.2" pt="30px" justifyContent="center" h="70vh">
-                <VStack w="50%" spacing={3}>
+            <Box bg="fypBG.2" pt="30px" justifyContent="center" h="70vh">
+                <VStack w="50%" spacing={3} m="0 auto">
                     <SectionTitle>About Us</SectionTitle>
                     <Text textAlign="justify">
                         Malaysia Buses System (MBS)  is the Malaysia  largest online bus ticket booking service. 
@@ -34,7 +34,7 @@ function AboutUs(){
                         your destination hassle-free !  
                     </Text>
                 </VStack>
-            </Flex>
+            </Box>
         </>
     )
 }
