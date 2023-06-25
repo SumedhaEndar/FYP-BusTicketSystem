@@ -1,9 +1,15 @@
+import BenefitSection from "../components/organisms/BenefitSection"
+import PopularRoutesSection from "../components/organisms/PopularRoutesSection"
+import SearchSection from "../components/organisms/SearchSection"
 
 function Home() {
     return(
-        <div>
+        <>
             <h2>This is Home Page</h2>
-        </div>
+            <SearchSection />
+            <PopularRoutesSection />
+            <BenefitSection />
+        </>
     )
 }
 
