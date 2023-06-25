@@ -164,8 +164,28 @@ const createFeedback = (req, res) => {
 }
 
 
+// Get Stations
+const getStations = (req, res) => {
+    mysql_MBS.query(
+        "SELECT station_state, GROUP_CONCAT(station_district) AS districts FROM stations GROUP BY station_state",
+        (err, results) => {
+            if(err){
+                res.status(500).json({message: 'Error retrieving data from database'})
+            }
+            const groupedResults = results.reduce((acc, result) => {
+                const { station_state, districts } = result;
+                acc[station_state] = districts.split(',');
+                return acc;
+            }, {});
+            res.json({groupedResults})
+        }
+    )
+}
+
+
 module.exports = {
     registerCustomer,
     loginCustomer,
     createFeedback,
+    getStations
 }
