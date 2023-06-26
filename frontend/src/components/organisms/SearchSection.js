@@ -12,13 +12,22 @@ import { useFormik } from "formik"
 import { SectionTitle } from "../atoms/WorldwideText"
 import { searchStationSchema } from "../../schemas/searchStationSchema"
 import { ArrowForwardIcon } from "@chakra-ui/icons"
-// import { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
+import Axios from "axios";
+
+const today = new Date().toISOString().split('T')[0];
 
 function SearchSection(){
-    // const [stations, setStations] = useState([])
-    // useEffect(()=>{
+    const [stations, setStations] = useState({})
+    
+    useEffect(()=>{
+        const getStations = async()=>{
+            const response = await Axios.get('api/customers/stations')
+            setStations(response.data)
+        }
+        getStations()
+    }, [])
 
-    // })
     const {values, errors, touched, handleChange, handleSubmit} = useFormik({
         initialValues: {
             depart: "",
@@ -66,7 +75,14 @@ function SearchSection(){
                                 value={values.depart}
                                 onChange={handleChange}
                             >
-
+                                {Object.entries(stations)
+                                    .map(([state, districts]) => (
+                                    <optgroup key={state} label={state}>
+                                        {districts.map((district) => (
+                                            <option key={district}>{district}</option>
+                                        ))}
+                                    </optgroup>
+                                ))}
                             </Select>
                         </FormControl>
                         <ArrowForwardIcon fontSize="xl"/>
@@ -74,16 +90,24 @@ function SearchSection(){
                             isRequired
                             isInvalid={touched.arrive && errors.arrive}
                         >
-                            <Input 
+                            <Select 
                                 id="arrive"
                                 name="arrive"
-                                type="text"
                                 size="md"
                                 bg="fypBG.1"
                                 placeholder="To"
                                 value={values.arrive}
                                 onChange={handleChange}
-                            />
+                            >
+                                {Object.entries(stations)
+                                    .map(([state, districts]) => (
+                                    <optgroup key={state} label={state}>
+                                        {districts.map((district) => (
+                                            <option key={district}>{district}</option>
+                                        ))}
+                                    </optgroup>
+                                ))}
+                            </Select>
                         </FormControl>
                         <FormControl 
                             isRequired
@@ -95,6 +119,7 @@ function SearchSection(){
                                 type="date"
                                 size="md"
                                 bg="fypBG.1"
+                                min={today}
                                 value={values.date}
                                 onChange={handleChange}
                             />
