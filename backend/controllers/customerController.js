@@ -183,9 +183,25 @@ const getStations = (req, res) => {
 }
 
 
+// Get Carousels
+const getCarousels = (req, res) => {
+    const query = 'SELECT carousel_url FROM carousels';
+    mysql_MBS.query(query, (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Failed to fetch images' });
+        } 
+        else {
+            const imageUrls = results.map(result => result.carousel_url);
+            res.status(200).json(imageUrls);
+        }
+    });
+}
+
 module.exports = {
     registerCustomer,
     loginCustomer,
     createFeedback,
-    getStations
+    getStations,
+    getCarousels
 }

@@ -25,6 +25,7 @@ app.use('/api/customers',customerRoutes)
 app.use('/api/customerDashboard',customerDashboardRoutes)
 app.use('/api/admins',adminRoutes)
 app.use('/api/adminDashboard',adminDashboardRoutes)
+app.use('/images/carousels', express.static('images/carousels'));
 
 
 // Connect to the MySQL database

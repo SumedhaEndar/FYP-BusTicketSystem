@@ -37,7 +37,7 @@ router.delete('/feedback/:id', deleteFeedback)
 router.post('/stations', addStation)
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'carousels/'); // Specify the destination directory where the uploaded files should be stored
+      cb(null, 'images/carousels'); // Specify the destination directory where the uploaded files should be stored
     },
     filename: function (req, file, cb) {
         // const extension = path.extname(file.originalname);
@@ -45,7 +45,6 @@ const storage = multer.diskStorage({
       cb(null, filename);
     }
   });
-  
 const upload = multer({ storage: storage });
 router.post('/carousels', upload.single('image'), addCarousel)
 router.delete('/carousels/:id', deleteCarousel)

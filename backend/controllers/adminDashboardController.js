@@ -264,7 +264,7 @@ const addStation = (req, res) => {
 const addCarousel = (req, res) => {
     const {carouselName} = req.body
     const {originalname} =req.file
-    const imageUrl = `/carousels/${originalname}`;
+    const imageUrl = `/images/carousels/${originalname}`;
 
     // Save image details to the database
     mysql_MBS.query(
@@ -306,7 +306,7 @@ const deleteCarousel = (req,res) =>{
                 }
                 else {
                     const carouselImage = results[0];
-                    const carouselImagePath = path.join(__dirname, '../carousels', carouselImage.carousel_filename);
+                    const carouselImagePath = path.join(__dirname, '../images/carousels', carouselImage.carousel_filename);
 
                     // Delete the carousel image file from the server's storage
                     fs.unlink(carouselImagePath, (err)=>{
