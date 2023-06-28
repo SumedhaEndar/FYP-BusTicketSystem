@@ -12,7 +12,10 @@ const {
     addStation,
     addCarousel,
     deleteCarousel,
-    getCarouselList
+    getCarouselList,
+    getRequest,
+    declineRequest,
+    acceptRequest
 } = require('../controllers/adminDashboardController')
 const requireAuth = require('../middleware/requireAuth')
 
@@ -49,5 +52,10 @@ const upload = multer({ storage: storage });
 router.post('/carousels', upload.single('image'), addCarousel)
 router.delete('/carousels/:id', deleteCarousel)
 router.get('/carousels', getCarouselList)
+
+// Admin Dash Request
+router.get('/requests', getRequest)
+router.delete('/requests/:id', declineRequest)
+router.post('/requests/:id', acceptRequest)
 
 module.exports = router

@@ -285,7 +285,6 @@ const addCarousel = (req, res) => {
             }
         }
     )
-
 }
 
 const deleteCarousel = (req,res) =>{
@@ -354,6 +353,149 @@ const getCarouselList = (req,res)=>{
 }
 /*-----------------------------------------------------------------------------------------*/
 
+
+/*-------------------------------- Admin Dash Request -------------------------------------*/
+const getRequest = (req,res) => {
+    const page = parseInt(req.query.page) || 1
+    const limit = 1
+    const offset = (page-1)*limit
+
+    // Execute first query
+    mysql_MBS.query(
+        'SELECT COUNT(*) as total_count FROM partnersregistration',
+        (err, countResult)=>{
+            if(err){
+                throw err
+            }
+
+            const totalCount = countResult[0].total_count
+
+            //Execute second query
+            mysql_MBS.query(
+                "SELECT * FROM partnersregistration LIMIT ? OFFSET ?",
+                [limit, offset],
+                (err, dataResult)=>{
+                    if(err){
+                        throw err
+                    }
+
+                    const response = {
+                        currentPage: page,
+                        totalPages: Math.ceil(totalCount/limit),
+                        totalCount: totalCount,
+                        items: dataResult
+                    }
+
+                    res.status(200).json(response)
+                }
+            )
+        }
+    )
+}
+
+const declineRequest = (req, res)=> {
+    const { id } = req.params
+
+    mysql_MBS.query(
+        'DELETE FROM partnersregistration WHERE partner_id = ?',
+        [id],
+        (err, result) => {
+            if(err){
+                res.status(500).json({message: 'Error deleting feedback'});
+                return;
+            }
+            res.status(200).json(result)
+        }
+    )
+}
+
+const acceptRequest = (req, res)=> {
+    const { id } = req.params
+    const {
+        name,
+        email,
+        contact, 
+        address
+    } = req.body
+
+    const defaultPassword = "Sumedha_12345"
+
+    mysql_MBS.beginTransaction((err)=>{
+        if(err){
+            console.error('Error starting transaction: ', err);
+            return res.status(500).json({ error: 'An error occurred.' });
+        }
+
+        //Check if the email already existed in the partners table ?
+        mysql_MBS.query(
+            "SELECT * FROM partners WHERE partner_email = ?",
+            [email],
+            async (err, result)=>{
+                if(err){
+                    mysql_MBS.rollback(()=>{
+                        console.error('Error adding data');
+                        return res.status(500).json({message: 'An error occurred.'});
+                    })
+                }
+                // If email exists, return an error
+                if(result.length > 0) {
+                    mysql_MBS.rollback(()=>{
+                        console.error('Email Already Existed');
+                        return res.status(400).json({message: 'Email already exists'})
+                    })
+                }
+                
+                else{
+                    // Hash the password
+                    const hashedPassword = await hashPassword(defaultPassword)
+                    
+                    // Add the data to the partners table
+                    mysql_MBS.query(
+                        "INSERT INTO partners (partner_name, partner_email, partner_contact, partner_address, partner_password) VALUES (?,?,?,?,?)",
+                        [name, email, contact, address, hashedPassword],
+                        (err, result) => {
+                            if(err){
+                                mysql_MBS.rollback(() => {
+                                    console.error('Error adding data: ');
+                                    return res.status(500).json({message: 'An error occurred.'});
+                                });
+                            }
+    
+                            // Delete data from the partners registration table
+                            mysql_MBS.query(
+                                'DELETE FROM partnersregistration WHERE partner_id = ?',
+                                [id],
+                                (err, result)=>{
+                                    if(err){
+                                        mysql_MBS.rollback(()=>{
+                                            console.error('Error deleting data: ', err);
+                                            return res.status(500).json({message: 'An error occurred.'});
+                                        })
+                                    }
+    
+                                    mysql_MBS.commit((err)=>{
+                                        if (err) {
+                                            mysql_MBS.rollback(() => {
+                                                console.error('Error committing transaction: ', err);
+                                                return res.status(500).json({message: 'An error occurred.'});
+                                            });
+                                        }
+                                        console.log('Transaction committed.');
+                                        return res.status(200).json({ message: 'Success' });
+                                    })
+                                }
+                            )
+                        }
+                    )
+                }
+            }
+        )
+    })
+    
+    
+}
+/*-----------------------------------------------------------------------------------------*/
+
 module.exports = {
     addEmployee,
     deleteEmployee,
@@ -365,5 +507,8 @@ module.exports = {
     addStation,
     addCarousel,
     deleteCarousel,
-    getCarouselList
+    getCarouselList,
+    getRequest,
+    declineRequest,
+    acceptRequest
 }
