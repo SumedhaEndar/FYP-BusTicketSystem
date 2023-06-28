@@ -45,13 +45,13 @@ function Footer() {
             </VStack>
             <VStack alignItems="flex-start" spacing="5px">
                 <FootHead>AskMB</FootHead>
-                <Link to="/askMB#contact">
+                <Link to="/askMB">
                     <FootText fontSize="1rem">Contact Details</FootText>
                 </Link>
-                <Link to="/askMB#faq">
+                <Link to="/askMB">
                     <FootText fontSize="1rem">FAQ</FootText>
                 </Link>
-                <Link to="/askMB#feedback">
+                <Link to="/askMB">
                     <FootText fontSize="1rem">Feedback Form</FootText>
                 </Link>
             </VStack>
