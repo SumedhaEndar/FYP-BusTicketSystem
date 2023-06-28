@@ -1,5 +1,4 @@
 const express = require('express')
-// const path = require('path')
 const {
     registerCustomer,
     loginCustomer,
@@ -23,7 +22,6 @@ router.post('/feedback',createFeedback)
 router.get('/stations', getStations)
 
 // Get Carousels
-// router.use('/carousels',express.static(path.join(__dirname,'..','carousels')))
 router.get('/carousels', getCarousels);
 
 module.exports = router
