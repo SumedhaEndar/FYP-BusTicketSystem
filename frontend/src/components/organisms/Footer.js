@@ -62,7 +62,7 @@ function Footer() {
                 <Link to="/partner-register">
                     <FootText fontSize="1rem">Be a partner</FootText>
                 </Link>
-                <Link to="/partner-login">
+                <Link to={(user && user.role === "Partner") ? "/partner-dash-profile" : "/partner-login"}>
                     <FootText fontSize="1rem">Partner Login</FootText>
                 </Link>
                 <Link to={(user && user.role === "Admin") ? "/admin-dash-profile" : "/admin-login"}>

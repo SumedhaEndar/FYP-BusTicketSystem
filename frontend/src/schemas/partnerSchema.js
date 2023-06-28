@@ -19,3 +19,15 @@ export const partnerRegisterSchema = yup.object().shape({
         .string()
         .required("Required")
 })
+
+// Login
+export const partnerLoginSchema = yup.object().shape({
+    email: yup
+        .string()
+        .email("Please enter a valid email")
+        .required("Required"),
+    password: yup
+        .string()
+        .min(5)
+        .required("Required"),
+})

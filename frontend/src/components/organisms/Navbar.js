@@ -32,6 +32,9 @@ function Navbar() {
             case "Admin":
                 whichDashboard = '/admin-dash-profile'
                 break
+            case "Partner":
+                whichDashboard = '/partner-dash-profile'
+                break
             default :
                 whichDashboard = '/customer-dash-booking'
         }
