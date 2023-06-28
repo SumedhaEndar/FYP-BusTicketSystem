@@ -22,6 +22,7 @@ import AdminDashProfile from './pages/AdminDashProfile'
 import AdminDashEmployee from './pages/AdminDashEmployee'
 import AdminDashFeedback from './pages/AdminDashFeedback'
 import AdminDashOthers from './pages/AdminDashOthers'
+import AdminDashRequests from './pages/AdminDashRequests'
 import PartnerNavbar from './components/organisms/PartnerNavbar'
 import PartnerDashProfile from './pages/PartnerDashProfile'
 import PartnerDashRoutes from './pages/PartnerDashRoutes'
@@ -104,6 +105,7 @@ function App() {
             <Route path="admin-dash-profile" element={<AdminDashProfile />} />
             <Route path="admin-dash-feedback" element={<AdminDashFeedback />} />
             <Route path="admin-dash-others" element={<AdminDashOthers />} />
+            <Route path="admin-dash-requests" element={<AdminDashRequests />} />
           </Route>
         </Route>
         <Route element={<PartnerRoutes />}>

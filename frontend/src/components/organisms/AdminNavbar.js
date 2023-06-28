@@ -102,6 +102,25 @@ function AdminNavbar(){
                             Others
                         </Text>
                     </li>
+                    <li>
+                        <Text
+                            as={RouterLink}
+                            to="/admin-dash-requests"
+                            textAlign="center"
+                            p={4}
+                            w="121px"
+                            fontWeight="bold"
+                            display="inline-block"
+                            bg={isActive('/admin-dash-requests') ? navItemBgColor : 'transparent'}
+                            color={isActive('/admin-dash-requests') ? navItemColor : 'fypBlue.2'}
+                            _hover={{
+                                bg: navItemHoverBgColor,
+                                color: navItemHoverColor,
+                            }}
+                        >
+                            Requests
+                        </Text>
+                    </li>
                 </HStack>
             </HStack>
         </Flex>
