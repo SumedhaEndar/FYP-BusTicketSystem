@@ -18,7 +18,7 @@ function CarouselSection(){
     return(
         <Carousel>
             {imageUrls.map((imageUrl, index)=>(
-                <Carousel.Item interval={2250}>
+                <Carousel.Item interval={2250} key={`Carousel${index}`}>
                     <img
                         className="d-block w-100"
                         src={`http://localhost:4000${imageUrl}`}
