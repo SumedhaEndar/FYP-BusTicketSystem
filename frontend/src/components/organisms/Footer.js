@@ -7,6 +7,7 @@ import {
     Image,
     forwardRef 
 } from "@chakra-ui/react"
+import { useAuthContext } from '../../hooks/useAuthContext'
 
 import logoImg from '../../assets/logo/logo.png';
 
@@ -23,6 +24,7 @@ const FootText = forwardRef((props, ref)=> (
 ))
 
 function Footer() {
+    const {user} = useAuthContext()
     return(
         <HStack spacing="5em" alignItems="flex-start" p="20px 15px 20px 10px">
             <VStack alignItems="flex-start" spacing="5px">
@@ -63,7 +65,7 @@ function Footer() {
                 <Link to="/partner-login">
                     <FootText fontSize="1rem">Partner Login</FootText>
                 </Link>
-                <Link to="/admin-login">
+                <Link to={(user && user.role === "Admin") ? "/admin-dash-profile" : "/admin-login"}>
                     <FootText fontSize="1rem">Admin Login</FootText>
                 </Link>
             </VStack>

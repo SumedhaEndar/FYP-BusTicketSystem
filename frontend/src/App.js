@@ -1,11 +1,16 @@
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom'
 import CustomerRoutes from './utils/CustomerRoutes'
 import AdminRoutes from './utils/AdminRoutes'
+import PartnerRoutes from './utils/PartnerRoutes'
 
 // import pages & components
 import Navbar from './components/organisms/Navbar'
 import Footer from './components/organisms/Footer'
 import Home from './pages/Home'
+import AskMB from './pages/AskMB'
+import AboutUs from './pages/AboutUs'
+import Enrich from './pages/Enrich'
+import Experience from './pages/Experience'
 import CustomerNavbar from './components/organisms/CustomerNavbar'
 import CustomerRegister from './pages/CustomerRegister'
 import CustomerLogin from './pages/CustomerLogin'
@@ -15,15 +20,15 @@ import AdminNavbar from './components/organisms/AdminNavbar'
 import AdminLogin from './pages/AdminLogin'
 import AdminDashProfile from './pages/AdminDashProfile'
 import AdminDashEmployee from './pages/AdminDashEmployee'
-import AskMB from './pages/AskMB'
-import AboutUs from './pages/AboutUs'
 import AdminDashFeedback from './pages/AdminDashFeedback'
 import AdminDashOthers from './pages/AdminDashOthers'
-import Enrich from './pages/Enrich'
-import Experience from './pages/Experience'
+import PartnerNavbar from './components/organisms/PartnerNavbar'
+import PartnerDashProfile from './pages/PartnerDashProfile'
+import PartnerDashRoutes from './pages/PartnerDashRoutes'
+import PartnerRegister from './pages/PartnerRegister'
+import PartnerLogin from './pages/PartnerLogin'
 
 function App() {
-
   return (
     <BrowserRouter>
       <Navbar />
@@ -61,6 +66,14 @@ function App() {
           path='/admin-login' 
           element={<AdminLogin />} 
         />
+        <Route 
+          path='/partner-register'
+          element={<PartnerRegister />}
+        />
+        <Route 
+          path='/partner-login'
+          element={<PartnerLogin />}
+        />
         <Route element={<CustomerRoutes />}>
           {/* Customer Navbar */}
           <Route 
@@ -91,6 +104,21 @@ function App() {
             <Route path="admin-dash-profile" element={<AdminDashProfile />} />
             <Route path="admin-dash-feedback" element={<AdminDashFeedback />} />
             <Route path="admin-dash-others" element={<AdminDashOthers />} />
+          </Route>
+        </Route>
+        <Route element={<PartnerRoutes />}>
+          {/* Partner Navbar */}
+          <Route 
+            path='/*'
+            element={
+              <>
+                <PartnerNavbar />
+                <Outlet />
+              </>
+            }
+          >
+            <Route path="partner-dash-profile" element={<PartnerDashProfile />} />
+            <Route path="partner-dash-routes" element={<PartnerDashRoutes />} />
           </Route>
         </Route>
       </Routes>
