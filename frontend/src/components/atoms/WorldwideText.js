@@ -22,8 +22,14 @@ const FormTitle = forwardRef((props, ref)=> (
 ))
 
 
+// Plans List Text
+const PlanListTitle = forwardRef((props, ref) => (
+    <Text fontSize="1.25rem" fontWeight="bold" mb="0px" ref={ref} {...props}/>
+))
+
 export {
     SectionTitle,
     MyFormLabel,
-    FormTitle
+    FormTitle,
+    PlanListTitle
 }

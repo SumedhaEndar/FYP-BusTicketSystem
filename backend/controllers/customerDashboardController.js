@@ -25,7 +25,6 @@ const getProfile = (req, res) => {
 
         }
     )
-
 }
 
 // Update Customer Profile

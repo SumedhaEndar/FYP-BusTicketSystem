@@ -62,7 +62,7 @@ const loginPartner = async(req, res) =>{
                     name: result[0].partner_name, 
                     email: email, 
                     role: "Partner",
-                    // id: result[0].customer_id,
+                    // id: result[0].partner_id,
                     token: token
                 })
             }

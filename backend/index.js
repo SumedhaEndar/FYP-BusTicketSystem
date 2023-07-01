@@ -7,6 +7,7 @@ const customerDashboardRoutes = require('./routes/customerDashboard')
 const adminDashboardRoutes = require('./routes/adminDashboard')
 const adminRoutes = require('./routes/admin')
 const partnerRoutes = require('./routes/partner')
+const partnerDashboardRoutes = require('./routes/partnerDashboard')
 
 
 // express app
@@ -27,6 +28,7 @@ app.use('/api/customerDashboard',customerDashboardRoutes)
 app.use('/api/admins',adminRoutes)
 app.use('/api/adminDashboard',adminDashboardRoutes)
 app.use('/api/partners',partnerRoutes)
+app.use('/api/partnerDashboard', partnerDashboardRoutes)
 app.use('/images/carousels', express.static('images/carousels'));
 
 
