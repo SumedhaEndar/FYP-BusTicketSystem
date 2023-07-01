@@ -38,11 +38,13 @@ const publishPlans = (req, res) => {
 
 const todayDate = getCurrentDate()
 const getRoutes = (req, res) => {
+    const id = req.user_id
+    // console.log(id)
     mysql_MBS.query(
         `SELECT plan_date, plan_origin, plan_destination, plan_time, plan_price FROM plans 
-         WHERE plan_date>= ? 
+         WHERE plan_date>= ? AND partner_id = ? 
          ORDER BY plan_date, plan_origin, plan_time`,
-        [todayDate],
+        [todayDate, id],
         (err, results) => {
             if(err){
                 res.status(500).json({message: 'Error retrieving data from table'})
