@@ -47,6 +47,25 @@ function PartnerNavbar(){
                     <li>
                         <Text
                             as={RouterLink}
+                            to="/partner-dash-plans"
+                            textAlign="center"
+                            p={4}
+                            w="121px"
+                            fontWeight="bold"
+                            display="inline-block"
+                            bg={isActive('/partner-dash-plans') ? navItemBgColor : 'transparent'}
+                            color={isActive('/partner-dash-plans') ? navItemColor : 'fypBlue.2'}
+                            _hover={{
+                                bg: navItemHoverBgColor,
+                                color: navItemHoverColor,
+                            }}
+                        >
+                            Plans
+                        </Text>
+                    </li>
+                    <li>
+                        <Text
+                            as={RouterLink}
                             to="/partner-dash-routes"
                             textAlign="center"
                             p={4}

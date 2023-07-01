@@ -26,6 +26,7 @@ import AdminDashRequests from './pages/AdminDashRequests'
 import PartnerNavbar from './components/organisms/PartnerNavbar'
 import PartnerDashProfile from './pages/PartnerDashProfile'
 import PartnerDashRoutes from './pages/PartnerDashRoutes'
+import PartnerDashPlans from './pages/PartnerDashPlans'
 import PartnerRegister from './pages/PartnerRegister'
 import PartnerLogin from './pages/PartnerLogin'
 
@@ -121,6 +122,7 @@ function App() {
           >
             <Route path="partner-dash-profile" element={<PartnerDashProfile />} />
             <Route path="partner-dash-routes" element={<PartnerDashRoutes />} />
+            <Route path="partner-dash-plans" element={<PartnerDashPlans />} />
           </Route>
         </Route>
       </Routes>
