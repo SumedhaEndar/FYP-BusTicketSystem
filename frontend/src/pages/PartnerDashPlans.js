@@ -28,27 +28,21 @@ function PartnerDashPlans(){
 
     const handleChangeDepartFrom = (e) => {
         setDepartFrom(e.target.value)
-        // console.log(e.target.value)
     }
     const handleChangeArriveTo = (e) => {
         setArriveTo(e.target.value)
-        // console.log(e.target.value)
     }
     const handleChangePrice = (e) => {
         setPrice(e.target.value)
-        // console.log(e.target.value)
     }
     const handleChangeFromDate = (e) => {
         setFromDate(e.target.value)
-        // console.log(e.target.value)
     }
     const handleChangeToDate = (e) => {
         setToDate(e.target.value)
-        // console.log(e.target.value)
     }
     const handleChangeTime = (time) => {
         setSelectedTime(time)
-        // console.log(time)
     }
     const handleClickSet = () => {
         setSet(true)
