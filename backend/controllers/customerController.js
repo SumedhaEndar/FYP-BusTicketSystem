@@ -198,10 +198,43 @@ const getCarousels = (req, res) => {
     });
 }
 
+
+const getSchedules = (req, res) => {
+    const { date, origin, destination } = req.query
+
+    // Construct the base SQL query
+    let sql = `SELECT plans.*, partners.* FROM plans JOIN partners ON plans.partner_id = partners.partner_id`
+
+    //     // Add the default condition
+    let conditions = []
+
+    // Add dynamic conditions based on the provided parameters
+    if(date) {
+        conditions.push(`plan_date = '${date}'`);
+    }
+    if(origin) {
+        conditions.push(`plan_origin = '${origin}'`);
+    }
+    if(destination) {
+        conditions.push(`plan_destination = '${destination}'`);
+    }
+
+      // Add the conditions if any are provided
+    if (conditions.length > 0) {
+        sql += ` WHERE ${conditions.join(' AND ')}`;
+    }
+
+    mysql_MBS.query(sql, (error, results) => {
+        if (error) throw error;
+        res.json(results);
+    });
+}
+
 module.exports = {
     registerCustomer,
     loginCustomer,
     createFeedback,
     getStations,
-    getCarousels
+    getCarousels,
+    getSchedules
 }
