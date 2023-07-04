@@ -14,16 +14,19 @@ import { searchStationSchema } from "../../schemas/searchStationSchema"
 import { ArrowForwardIcon } from "@chakra-ui/icons"
 import { useEffect, useState } from "react"
 import Axios from "axios";
+import { Link } from "react-router-dom"
 
 const today = new Date().toISOString().split('T')[0];
 
 function SearchSection(){
     const [stations, setStations] = useState({})
+    // const [isValid, setIsValid] = useState(false)
     
     useEffect(()=>{
         const getStations = async()=>{
             const response = await Axios.get('api/customers/stations')
             setStations(response.data)
+            // console.log(response)
         }
         getStations()
     }, [])
@@ -79,7 +82,7 @@ function SearchSection(){
                                     .map(([state, districts]) => (
                                     <optgroup key={state} label={state}>
                                         {districts.map((district) => (
-                                            <option key={district}>{district}</option>
+                                            <option key={district} value={`${district}, ${state}`}>{district}</option>
                                         ))}
                                     </optgroup>
                                 ))}
@@ -103,7 +106,7 @@ function SearchSection(){
                                     .map(([state, districts]) => (
                                     <optgroup key={state} label={state}>
                                         {districts.map((district) => (
-                                            <option key={district}>{district}</option>
+                                            <option key={district} value={`${district}, ${state}`} >{district}</option>
                                         ))}
                                     </optgroup>
                                 ))}
@@ -125,7 +128,11 @@ function SearchSection(){
                             />
                         </FormControl>
                         <Button type="submit" colorScheme="blue" p="10px 25px" width="200px">
-                            Search
+                            {   
+                                (values.arrive && values.depart && values.date) ? 
+                                <Link to="/bus-schedule" state={{searchData: values}}>Search</Link> :
+                                "Search"
+                            }
                         </Button>
                     </HStack>
                 </Flex>

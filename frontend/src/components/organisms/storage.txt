@@ -1,0 +1,69 @@
+function ScheduleText1(props) {
+    return(
+        <Text as="b" fontSize="lg">
+            {props.children}
+        </Text>
+    )
+}
+
+function ScheduleText2(props) {
+    return(
+        <Text as="b" fontSize="md">
+            {props.children}
+        </Text>
+    )
+}
+
+function ScheduleTable(props){
+    return(
+        <Box w="800px" border="1px" borderRadius="4px" borderColor="gray.400" boxShadow="lg" my="20px" bg="white">
+            <HStack py="10px" px="30px" spacing="10px" >
+                <Box w="15%">
+                    <ScheduleText1 fontSize="md">{props.departTime}</ScheduleText1>
+                </Box>
+                <Box w="40%">
+                    <HStack textAlign="left">
+                        <Box textAlign="left" fontSize="sm" w="50%">
+                            {props.departLocation}
+                        </Box>
+                        <Box>
+                            <Image
+                                src={RightArrow}
+                                h="24px"
+                                w="24px"
+                            />
+                        </Box>
+                        <Box fontSize="sm" w="50%"> 
+                            {props.arriveLocation}
+                        </Box>
+                    </HStack>
+                </Box>
+                <Box w="15%" fontSize="sm">
+                    15 Seats
+                </Box>
+                <Box w="15%">
+                    <ScheduleText1>RM {props.price}</ScheduleText1>
+                </Box>
+                <Button colorScheme="blue" w="15%" size="md">
+                    Select
+                </Button>
+            </HStack>
+            <Divider w="95%" ml="2.5%"/>
+            <HStack py="15px" px="30px" spacing="30px">
+                <Image 
+                    src={props.busOperatorLogo}
+                />
+                {/* <HStack>
+                    <ScheduleText2>Rate :</ScheduleText2>
+                    <Image objectFit='cover' src={props.Star1} />
+                    <Image objectFit='cover' src={props.Star2} />
+                    <Image objectFit='cover' src={props.Star3} />
+                    <Image objectFit='cover' src={props.Star4} />
+                    <Image objectFit='cover' src={props.Star5} />
+                </HStack> */}
+                <Box border="1px" borderRadius="4px" color="blue.400" backgroundColor="#EBE5FC" px="10px" textAlign="center">Refunable</Box>
+                <Box border="1px" borderRadius="4px" color="blue.400" backgroundColor="#EBE5FC" px="10px" textAlign="center">Reschedulable</Box>
+            </HStack>
+        </Box>
+    )
+}

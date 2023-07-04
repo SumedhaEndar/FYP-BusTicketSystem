@@ -29,6 +29,7 @@ import PartnerDashRoutes from './pages/PartnerDashRoutes'
 import PartnerDashPlans from './pages/PartnerDashPlans'
 import PartnerRegister from './pages/PartnerRegister'
 import PartnerLogin from './pages/PartnerLogin'
+import BusSchedule from './pages/BusSchedule'
 
 function App() {
   return (
@@ -55,6 +56,10 @@ function App() {
         <Route 
           path='/askMB' 
           element={<AskMB />} 
+        />
+        <Route 
+          path='/bus-schedule'
+          element={<BusSchedule />}
         />
         <Route 
           path='/customer-register' 

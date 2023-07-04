@@ -27,9 +27,25 @@ const PlanListTitle = forwardRef((props, ref) => (
     <Text fontSize="1.25rem" fontWeight="bold" mb="0px" ref={ref} {...props}/>
 ))
 
+// Trip Card Text
+const TripCardTitle = forwardRef((props, ref)=> (
+    <Text fontSize="1rem" fontWeight="bold" ref={ref} {...props}/>
+))
+const TripCardText = forwardRef((props, ref)=>(
+    <Text fontSize="1.25rem" fontWeight="bold" ref={ref} {...props}/>
+))
+
+// RadioTitle
+const RadioTitle = forwardRef((props, ref)=>(
+    <Text fontSize="1.15rem" fontWeight="bold" textDecoration="underline" ref={ref} {...props}/>
+))
+
 export {
     SectionTitle,
     MyFormLabel,
     FormTitle,
-    PlanListTitle
+    PlanListTitle,
+    TripCardTitle,
+    TripCardText,
+    RadioTitle
 }
