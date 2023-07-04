@@ -5,7 +5,7 @@ import {
     CardBody, 
     Text,
     Button,
-    HStack
+    HStack,
 } from '@chakra-ui/react'
 import { useLocation } from "react-router-dom"
 import { useState, useEffect } from 'react'
@@ -48,11 +48,9 @@ function BusSchedule(){
     }
     const handleDepartTime = (value) => {
         setSelectedDepartTime(value);
-        // console.log(value)
     };
     const handleSelectedBus = (value) => {
         setSelectedBus(value)
-        // console.log(value)
     }
     const handleReset = () => {
         setSelectedBus('')
@@ -102,8 +100,6 @@ function BusSchedule(){
         getSchedule()
     },[searchData, departDate, selectedBus, selectedDepartTime])
 
-    // console.log(selectedBus)
-
     const sortedBusSchedule = busSchedule.sort((a,b) => a.plan_time - b.plan_time)
 
     return(
@@ -119,7 +115,7 @@ function BusSchedule(){
             {
                 busSchedule.length !== 0 
                 ?
-                <Flex alignItems="flex-start" width="95%" justifyContent="space-between">
+                <Flex alignItems="flex-start" width="95%" justifyContent="center" gap="30px">
                     <Card width="300px" mt="20px" borderRadius="5px">
                         <CardHeader p="10px" mb="0px" bg="#E7ECF0">
                             <HStack justifyContent="space-between">
@@ -158,6 +154,7 @@ function BusSchedule(){
                 :
                 <Flex alignItems="center" mt="15px">No Bus Schedule</Flex>
             }
+            
         </Flex>
     )
 }

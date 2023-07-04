@@ -75,7 +75,6 @@ const loginPartner = async(req, res) =>{
 }
 
 
-
 module.exports = {
     registerPartner,
     loginPartner

@@ -205,7 +205,7 @@ const getSchedules = (req, res) => {
     // Construct the base SQL query
     let sql = `SELECT plans.*, partners.* FROM plans JOIN partners ON plans.partner_id = partners.partner_id`
 
-    //     // Add the default condition
+    // Add the default condition
     let conditions = []
 
     // Add dynamic conditions based on the provided parameters
@@ -219,16 +219,53 @@ const getSchedules = (req, res) => {
         conditions.push(`plan_destination = '${destination}'`);
     }
 
-      // Add the conditions if any are provided
+    // Add the conditions if any are provided
     if (conditions.length > 0) {
         sql += ` WHERE ${conditions.join(' AND ')}`;
     }
 
-    mysql_MBS.query(sql, (error, results) => {
-        if (error) throw error;
-        res.json(results);
-    });
+    mysql_MBS.query(
+        sql, 
+        (error, results) => {
+            if (error) {
+                throw error
+            };
+
+            // Extract all plan IDs from the results
+            const planIds = results.map(result => result.plan_id);
+
+            // Query the bookings table to get the count for each plan
+            const bookingSql = `SELECT plan_id, COUNT(*) AS total_bookings, GROUP_CONCAT(booking_seat) AS seats_occupied FROM bookings 
+            WHERE plan_id IN (${planIds.join(',')}) GROUP BY plan_id`;
+
+            mysql_MBS.query(bookingSql, (bookingError, bookingResults)=>{
+                if(bookingError){
+                    throw bookingError
+                }
+
+                // Combine the booking counts with the original results
+                const mergedResults = results.map(result => {
+                    const booking = bookingResults.find(
+                        bookingResult => bookingResult.plan_id === result.plan_id
+                    );
+
+                    // Convert the booking_seats string to an array of integers
+                    const bookingSeats = booking ? booking.seats_occupied.split(',').map(seat => parseInt(seat)) : [];
+
+                    // Add the total_bookings and seats_occupied property to each result object
+                    return { 
+                        ...result, 
+                        total_bookings: booking ? booking.total_bookings : 0 ,
+                        seats_occupied: bookingSeats
+                    };
+                });
+                
+                res.status(200).json(mergedResults);
+            })
+        }
+    )
 }
+
 
 module.exports = {
     registerCustomer,
