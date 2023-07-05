@@ -96,6 +96,7 @@ function BusSchedule(){
                     setBusSchedule(scheduleByBus.filter((busSchedule)=> busSchedule.plan_time >= 64800 && busSchedule.plan_time < 82800))
                 }
             }
+            console.log(response.data)
         }
         getSchedule()
     },[searchData, departDate, selectedBus, selectedDepartTime])

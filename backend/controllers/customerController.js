@@ -199,6 +199,7 @@ const getCarousels = (req, res) => {
 }
 
 
+// Get Schedules
 const getSchedules = (req, res) => {
     const { date, origin, destination } = req.query
 
@@ -228,7 +229,8 @@ const getSchedules = (req, res) => {
         sql, 
         (error, results) => {
             if (error) {
-                throw error
+                // console.error(error);
+                return res.status(200).json([]);
             };
 
             // Extract all plan IDs from the results
@@ -240,7 +242,8 @@ const getSchedules = (req, res) => {
 
             mysql_MBS.query(bookingSql, (bookingError, bookingResults)=>{
                 if(bookingError){
-                    throw bookingError
+                    // console.error(bookingError);
+                    return res.status(200).json([]);
                 }
 
                 // Combine the booking counts with the original results
@@ -273,5 +276,5 @@ module.exports = {
     createFeedback,
     getStations,
     getCarousels,
-    getSchedules
+    getSchedules,
 }
