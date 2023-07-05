@@ -11,6 +11,8 @@ import AskMB from './pages/AskMB'
 import AboutUs from './pages/AboutUs'
 import Enrich from './pages/Enrich'
 import Experience from './pages/Experience'
+import BusSchedule from './pages/BusSchedule'
+import Payment from './pages/Payment'
 import CustomerNavbar from './components/organisms/CustomerNavbar'
 import CustomerRegister from './pages/CustomerRegister'
 import CustomerLogin from './pages/CustomerLogin'
@@ -29,7 +31,6 @@ import PartnerDashRoutes from './pages/PartnerDashRoutes'
 import PartnerDashPlans from './pages/PartnerDashPlans'
 import PartnerRegister from './pages/PartnerRegister'
 import PartnerLogin from './pages/PartnerLogin'
-import BusSchedule from './pages/BusSchedule'
 
 function App() {
   return (
@@ -60,6 +61,10 @@ function App() {
         <Route 
           path='/bus-schedule'
           element={<BusSchedule />}
+        />
+        <Route 
+          path='/payment'
+          element={<Payment />}
         />
         <Route 
           path='/customer-register' 

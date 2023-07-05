@@ -5,7 +5,7 @@ const {
     createFeedback,
     getStations,
     getCarousels,
-    getSchedules
+    getSchedules,
 } = require('../controllers/customerController')
 
 const router = express.Router()
@@ -27,5 +27,6 @@ router.get('/carousels', getCarousels);
 
 // Get Bus Schedule
 router.get('/schedules', getSchedules)
+
 
 module.exports = router

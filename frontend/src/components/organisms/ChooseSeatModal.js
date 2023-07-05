@@ -9,6 +9,7 @@ import {
     Button
   } from '@chakra-ui/react'
 import { useState } from 'react';
+import { Link } from "react-router-dom"
 import CustomerLoginModal from '../molecules/CustomerLoginModal'
 import { useAuthContext } from "../../hooks/useAuthContext";
 import BusSeats from '../molecules/BusSeats';
@@ -26,10 +27,6 @@ function ChooseSeatModal({isOpen, onClose, eachSchedule}){
                 setClickedSeats((prevClickedSeats) => [...prevClickedSeats, data])
             }
         }
-    }
-
-    const handleContinue = () => {
-        console.log(clickedSeats)
     }
     
     return(
@@ -58,13 +55,17 @@ function ChooseSeatModal({isOpen, onClose, eachSchedule}){
                     {
                         (user && user.role === "Customer") &&
                         (clickedSeats.length > 0) &&
-                        <Button colorScheme="blue" onClick={handleContinue}>
-                            Continue
+                        <Button colorScheme="blue">
+                            <Link to="/payment" state={{
+                                bookingSeats: clickedSeats,
+                                eachSchedule: eachSchedule
+                            }}>
+                                Continue
+                            </Link>
                         </Button>
                     }
                 </ModalFooter>
             </ModalContent>
-           
         </Modal>
     )
 }

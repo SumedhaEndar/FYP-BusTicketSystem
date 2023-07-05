@@ -91,7 +91,95 @@ const updateProfile = (req, res) => {
    
 }
 
+// Get customer enrich points
+const getEnrichPoints = (req, res)=>{
+    const id = req.user_id
+    // console.log(id)
+    mysql_MBS.query(
+        "SELECT * FROM customers WHERE customer_id = ?",
+        [id],
+        (err, result)=>{
+            if(err){
+                res.status(500).json({message: 'Error ID'});
+                return
+            }
+            res.status(200).json(result[0])
+        }
+    )
+}
+
+// Add a booking
+const addBooking = (req, res) => {
+    const customerId = req.user_id;
+    const { planId, bookingSeatNumbers, bookingCost, usedPointsTokens, addEnrichPoints } = req.body;
+  
+    const query = "INSERT INTO bookings (plan_id, customer_id, booking_seat, booking_cost) VALUES (?, ?, ?, ?)";
+  
+    let successfulBookings = 0;
+    let totalBookings = bookingSeatNumbers.length;
+  
+    bookingSeatNumbers.forEach((seatNumber) => {
+      const values = [planId, customerId, seatNumber, bookingCost];
+  
+      // Execute the query for each item in the array
+      mysql_MBS.query(query, values, (error, results) => {
+        if (error) {
+          console.error('Error inserting data:', error);
+        } else {
+          console.log('Data inserted successfully.');
+          successfulBookings++;
+        }
+  
+        // Check if all bookings have been processed
+        if (successfulBookings === totalBookings) {
+          if (usedPointsTokens.whichOne === 'Enrich') {
+            mysql_MBS.query(
+              `UPDATE customers SET customer_enrich = customer_enrich - ${usedPointsTokens.pointsUsed} + ${addEnrichPoints} WHERE customer_id = ${customerId}`,
+              (err, results) => {
+                if (err) {
+                  console.error('Error:', err);
+                  res.status(500).json({ message: 'An error occurred while updating the Enrich points.' });
+                } else {
+                  console.log('Enrich Points updated successfully.');
+                  res.status(200).json({ message: 'All data inserted and Enrich points updated successfully.' });
+                }
+              }
+            );
+          } else if (usedPointsTokens.whichOne === 'Refund') {
+            mysql_MBS.query(
+              `UPDATE customers SET customer_refund = customer_refund - ${usedPointsTokens.tokensUsed}, customer_enrich = customer_enrich + ${addEnrichPoints} WHERE customer_id = ${customerId}`,
+              (err, results) => {
+                if (err) {
+                  console.error('Error:', err);
+                  res.status(500).json({ message: 'An error occurred while updating the refund tokens.' });
+                } else {
+                  console.log('Refund Tokens and Enrich Points updated successfully.');
+                  res.status(200).json({ message: 'All data inserted and tokens updated successfully.' });
+                }
+              }
+            );
+          } else {
+            mysql_MBS.query(
+              `UPDATE customers SET customer_enrich = customer_enrich + ${addEnrichPoints} WHERE customer_id = ${customerId}`,
+              (err, results) => {
+                if (err) {
+                  console.error('Error:', err);
+                  res.status(500).json({ message: 'An error occurred while updating the Enrich points.' });
+                } else {
+                  console.log('Enrich Points updated successfully.');
+                  res.status(200).json({ message: 'All data inserted and Enrich points updated successfully.' });
+                }
+              }
+            );
+          }
+        }
+      });
+    });
+};
+
 module.exports = {
     getProfile,
-    updateProfile
+    updateProfile,
+    getEnrichPoints,
+    addBooking
 }

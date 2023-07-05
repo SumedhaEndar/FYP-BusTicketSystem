@@ -17,7 +17,7 @@ import ChooseSeatModal from "./ChooseSeatModal";
 
 function ScheduleItem({eachSchedule}){
     const {isOpen, onOpen, onClose} = useDisclosure()
-    // console.log(eachSchedule.seats_occupied)
+
     return(
         <>
             <Box w="850px" border="1px" borderRadius="4px" borderColor="gray.400" boxShadow="lg" mt="20px" bg="white">
@@ -62,7 +62,7 @@ function ScheduleItem({eachSchedule}){
                 <ChooseSeatModal 
                     isOpen={isOpen} 
                     onClose={onClose} 
-                    eachSchedule={eachSchedule}
+                    eachSchedule = {eachSchedule}
                 />
             )}
         </>

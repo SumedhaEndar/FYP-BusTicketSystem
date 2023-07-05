@@ -7,16 +7,32 @@ import {
 } from '@chakra-ui/react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { useState, useEffect } from 'react';
+import Axios from "axios";
+
 
 function CustomerNavbar(){
     const { user } = useAuthContext()
     const location = useLocation();
+    const [ pointsTokens, setPointsTokens ] = useState([])
     const isActive = (pathname) => location.pathname === pathname;
 
     const navItemBgColor = useColorModeValue('fypBlue.2');
     const navItemColor = useColorModeValue('white');
     const navItemHoverBgColor = useColorModeValue('fypBlue.2');
     const navItemHoverColor = useColorModeValue('white');
+
+    useEffect(()=>{
+        const getPointsTokens = async() => {
+            const response = await Axios.get(`api/customerDashboard/enrich-points`, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            setPointsTokens(response.data)
+        }
+        getPointsTokens()
+    },[user])
 
     return(
         <Flex 
@@ -64,8 +80,8 @@ function CustomerNavbar(){
                         </Text>
                     </li>
                 </HStack>
-                <Text fontWeight="bold" color="fypBlue.2">Enrich Points: 0 </Text>
-                <Text fontWeight="bold" color="fypBlue.2">Refund Tokens: RM 0</Text>
+                <Text fontWeight="bold" color="fypBlue.2">Enrich Points: {pointsTokens.customer_enrich} </Text>
+                <Text fontWeight="bold" color="fypBlue.2">Refund Tokens: RM {pointsTokens.customer_refund}</Text>
             </HStack>
         </Flex>
     )
