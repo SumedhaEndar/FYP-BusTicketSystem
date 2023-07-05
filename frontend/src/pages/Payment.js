@@ -2,9 +2,8 @@ import {
     Box,
     SimpleGrid,
 } from '@chakra-ui/react'
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useAuthContext } from "../hooks/useAuthContext";
-import { useNavigate } from 'react-router-dom';
 import Axios from "axios";
 
 import FormHeader from "../components/molecules/FormHeader"

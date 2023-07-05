@@ -66,6 +66,25 @@ function PartnerNavbar(){
                     <li>
                         <Text
                             as={RouterLink}
+                            to="/partner-dash-add-logo"
+                            textAlign="center"
+                            p={4}
+                            w="121px"
+                            fontWeight="bold"
+                            display="inline-block"
+                            bg={isActive('/partner-dash-add-logo') ? navItemBgColor : 'transparent'}
+                            color={isActive('/partner-dash-add-logo') ? navItemColor : 'fypBlue.2'}
+                            _hover={{
+                                bg: navItemHoverBgColor,
+                                color: navItemHoverColor,
+                            }}
+                        >
+                            Add Logo
+                        </Text>
+                    </li>
+                    <li>
+                        <Text
+                            as={RouterLink}
                             to="/partner-dash-routes"
                             textAlign="center"
                             p={4}
