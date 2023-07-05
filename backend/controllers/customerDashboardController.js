@@ -108,7 +108,7 @@ const getEnrichPoints = (req, res)=>{
     )
 }
 
-// Add a booking
+// Add Bookings
 const addBooking = (req, res) => {
     const customerId = req.user_id;
     const { planId, bookingSeatNumbers, bookingCost, usedPointsTokens, addEnrichPoints } = req.body;
@@ -177,9 +177,133 @@ const addBooking = (req, res) => {
     });
 };
 
+
+// Get Bookings
+const getBooking = (req, res) => {
+  const customerId = req.user_id;
+
+  const query = `
+    SELECT 
+      bookings.booking_id,
+      bookings.booking_seat,
+      plans.plan_price,
+      plans.plan_date,
+      plans.plan_origin,
+      plans.plan_destination,
+      plans.plan_time,
+      partners.partner_logoImg
+    FROM
+      bookings
+      INNER JOIN plans ON bookings.plan_id = plans.plan_id
+      INNER JOIN partners ON plans.partner_id = partners.partner_id
+    WHERE
+      bookings.customer_id = ?
+  `;
+
+  mysql_MBS.query(query, [customerId], (error, results) => {
+    if (error) {
+      console.error('Error fetching data:', error);
+      res.status(500).json({ error: 'Error fetching data from the database' });
+    } 
+    else {
+      res.status(200).json({ bookings: results });
+    }
+  });
+}
+
+// Delete Bookings
+const deleteBooking = (req, res) => {
+  const customerId = req.user_id;
+  const { id } = req.params;
+  const { refundValue } = req.body;
+
+  // Begin the transaction
+  mysql_MBS.beginTransaction((err) => {
+    if (err) {
+      console.error('Error beginning transaction:', err);
+      res.status(500).json({ message: 'Error beginning transaction' });
+      return;
+    }
+
+    // Update operation
+    mysql_MBS.query(
+      'UPDATE customers SET customer_refund = customer_refund+? WHERE customer_id = ?',
+      [refundValue, customerId],
+      (updateErr, updateResult) => {
+        if (updateErr) {
+          console.error('Error updating table1:', updateErr);
+          mysql_MBS.rollback(() => {
+            res.status(500).json({ message: 'Error updating table1' });
+          });
+          return;
+        }
+
+        // Delete operation
+        mysql_MBS.query(
+          'DELETE FROM bookings WHERE booking_id = ?',
+          [id],
+          (deleteErr, deleteResult) => {
+            if (deleteErr) {
+              console.error('Error deleting from table2:', deleteErr);
+              mysql_MBS.rollback(() => {
+                res.status(500).json({ message: 'Error deleting from table2' });
+              });
+              return;
+            }
+
+            // Commit the transaction
+            mysql_MBS.commit((commitErr) => {
+              if (commitErr) {
+                console.error('Error committing transaction:', commitErr);
+                mysql_MBS.rollback(() => {
+                  res.status(500).json({ message: 'Error committing transaction' });
+                });
+                return;
+              }
+
+              // Transaction successfully completed
+              res.status(200).json({ message: 'Update and delete completed successfully' });
+            });
+          }
+        );
+      }
+    );
+  });
+};
+
+// Get a single booking
+const getOneBooking = (req, res) => {
+  const { booking_id } = req.params;
+
+  const query = `
+    SELECT bookings.booking_seat, plans.plan_date, plans.plan_origin, plans.plan_destination, plans.plan_time, partners.partner_name
+    FROM bookings
+    INNER JOIN plans ON bookings.plan_id = plans.plan_id
+    INNER JOIN partners ON plans.partner_id = partners.partner_id
+    WHERE bookings.booking_id = ?
+  `;
+
+  mysql_MBS.query(query, [booking_id], (error, results) => {
+    if (error) {
+      console.error('Error retrieving booking details:', error);
+      res.status(500).json({ error: 'Error retrieving booking details' });
+    } else {
+      if (results.length === 0) {
+        res.status(404).json({ message: 'Booking not found' });
+      } else {
+        const bookingDetails = results[0];
+        res.status(200).json(bookingDetails);
+      }
+    }
+  });
+}
+
 module.exports = {
     getProfile,
     updateProfile,
     getEnrichPoints,
-    addBooking
+    addBooking,
+    getBooking,
+    getOneBooking,
+    deleteBooking
 }
