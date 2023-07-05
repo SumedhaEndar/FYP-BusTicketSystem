@@ -10,6 +10,7 @@ import {
     PopoverContent,
     useDisclosure
 } from '@chakra-ui/react'    
+import { Link } from "react-router-dom"
 import CancelBookingModal from '../organisms/CancelBookingModal'
 import { convertToTime } from "../../utils/convertTimeUtils";
 import RightArrow from "../../assets/others/RightArrow.jpg"
@@ -34,7 +35,6 @@ function ManageText2(props) {
 
 function ManageBooking({booking}) {
     const {isOpen, onOpen, onClose} = useDisclosure()
-
     return(
         <>
             <HStack border="1px" borderColor="gray.200" py="15px" px="30px" spacing="30px" w="100%" borderRadius="10px" bgColor="white" boxShadow='2xl'>
@@ -93,8 +93,10 @@ function ManageBooking({booking}) {
                                     backgroundColor="#0A468C" 
                                     textColor="white" 
                                     _hover={{background: "blue.400",color: "white", }}
-                                >
-                                    Edit Booking
+                                > 
+                                    <Link to="/customer-dash-reschedule" state={{booking: booking}}>   
+                                        Edit Booking
+                                    </Link>
                                 </Button>
                                 {/* <Button borderRadius="0px" backgroundColor="#0A468C" textColor="white" _hover={{background: "blue.400",color: "white", }}>Print Booking Ticket</Button> */}
                             </PopoverContent>

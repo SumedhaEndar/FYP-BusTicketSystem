@@ -30,6 +30,7 @@ app.use('/api/adminDashboard',adminDashboardRoutes)
 app.use('/api/partners',partnerRoutes)
 app.use('/api/partnerDashboard', partnerDashboardRoutes)
 app.use('/images/carousels', express.static('images/carousels'));
+app.use('/images/logoImages', express.static('images/logoImages'))
 
 
 // Connect to the MySQL database

@@ -18,6 +18,7 @@ import CustomerRegister from './pages/CustomerRegister'
 import CustomerLogin from './pages/CustomerLogin'
 import CustomerDashProfile from './pages/CustomerDashProfile'
 import CustomerDashBooking from './pages/CustomerDashBooking'
+import CustomerDashReschedule from './pages/CustomerDashReschedule'
 import AdminNavbar from './components/organisms/AdminNavbar'
 import AdminLogin from './pages/AdminLogin'
 import AdminDashProfile from './pages/AdminDashProfile'
@@ -31,6 +32,7 @@ import PartnerDashRoutes from './pages/PartnerDashRoutes'
 import PartnerDashPlans from './pages/PartnerDashPlans'
 import PartnerRegister from './pages/PartnerRegister'
 import PartnerLogin from './pages/PartnerLogin'
+import PartnerDashLogo from './pages/PartnerDashLogo'
 
 function App() {
   return (
@@ -99,6 +101,7 @@ function App() {
           >
             <Route path="customer-dash-profile" element={<CustomerDashProfile />} />
             <Route path="customer-dash-booking" element={<CustomerDashBooking />} />
+            <Route path="customer-dash-reschedule" element={<CustomerDashReschedule/>} />
           </Route>
         </Route>
         <Route element={<AdminRoutes />}>
@@ -133,6 +136,7 @@ function App() {
             <Route path="partner-dash-profile" element={<PartnerDashProfile />} />
             <Route path="partner-dash-routes" element={<PartnerDashRoutes />} />
             <Route path="partner-dash-plans" element={<PartnerDashPlans />} />
+            <Route path="partner-dash-add-logo" element={<PartnerDashLogo />}/>
           </Route>
         </Route>
       </Routes>

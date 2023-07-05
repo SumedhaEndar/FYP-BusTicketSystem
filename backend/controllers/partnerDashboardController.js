@@ -7,9 +7,94 @@ const {
     getDatesBetween,
     getCurrentDate
 } = require('../utilities/dateUtils');
+const path = require('path')
+const fs = require('fs');
 
 
-const getProfile = (req, res) => {   
+const getProfile = (req, res) => {
+    const id = req.user_id
+    console.log(id)
+    mysql_MBS.query(
+        "SELECT * FROM partners WHERE partner_id = ?",
+        [id],
+        (err, result)=>{
+            if(err) {
+                res.status(500).json({message: 'Error ID'});
+                return
+            }
+            res.status(200).json({
+                name: result[0].partner_name,
+                email: result[0].partner_email,
+                mobile: result[0].partner_contact,
+            });
+
+        }
+    )
+}
+
+const updateProfile = (req, res) => {
+    const id  = req.user_id
+    const {
+        name,
+        email,
+        mobile,
+        address,
+        description,
+        oldPassword,
+        newPassword
+    } = req.body
+
+    if(oldPassword === ""){
+        mysql_MBS.query(
+            "UPDATE partners SET partner_name = ?, partner_email = ?, partner_contact = ?, partner_address = ?, partner_description = ? WHERE partner_id = ?",
+            [name, email, mobile, address, description, id],
+            (err, result)=>{
+                if(err){
+                    res.status(500).json({ error: 'Error updating partner', err });
+                }
+                else {
+                    res.status(200).json({message: "partner Updating Successful"});
+                }
+            }
+        )
+    }
+
+    else {
+        mysql_MBS.query(
+            "SELECT partner_password FROM partners WHERE partner_id = ?",
+            [id],
+            async (err, result)=>{
+                if(err){
+                    res.status(500).json({ error: 'Error retreive the old password when updating partner' });
+                    return
+                }
+    
+                const hashedPassword = result[0].partner_password
+                const isPasswordMatch = await comparePasswords(oldPassword, hashedPassword)
+    
+                if(isPasswordMatch) {
+                    const hashedPassword = await hashPassword(newPassword)
+                    mysql_MBS.query(
+                        "UPDATE partners SET partner_name = ?, partner_email = ?, partner_contact = ?, partner_password = ?, partner_address = ?, partner_description = ? WHERE partner_id = ?",
+                        [name, email, mobile, hashedPassword, address, description, id],
+                        (err, result)=>{
+                            if(err){
+                                res.status(500).json({ error: 'Error updating partner' });
+                            }
+                            else {
+                                res.status(200).json({ message: 'Partner updated successfully' });
+                            }
+                        }
+                    )
+                }
+                else {
+                    // Passwords do not match
+                    res.status(401).json({ error: 'Invalid password' });
+                }
+            }
+        )
+    }
+   
 }
 
 const publishPlans = (req, res) => {
@@ -83,8 +168,34 @@ const getRoutes = (req, res) => {
     )
 }
 
+const addLogo = (req, res) => {
+    const partnerId = req.user_id
+    const {originalname} =req.file
+    const imageUrl = `/images/logoImages/${originalname}`;
+
+    // Save image details to the database
+    mysql_MBS.query(
+        "UPDATE partners SET partner_logoImg = ? WHERE partner_id= ?",
+        [imageUrl, partnerId],
+        (err, result)=>{
+            if(err){
+                console.error(err)
+                res.status(500).json({error: 'Failed to upload image'})
+            }
+            else {
+                res.status(200).json({
+                    logo_url: imageUrl
+                });
+            }
+        }
+    )
+}
+
+
 module.exports = {
     getProfile,
+    updateProfile, 
     publishPlans,
-    getRoutes
+    getRoutes,
+    addLogo
 }

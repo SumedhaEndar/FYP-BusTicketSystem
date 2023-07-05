@@ -191,7 +191,9 @@ const getBooking = (req, res) => {
       plans.plan_origin,
       plans.plan_destination,
       plans.plan_time,
-      partners.partner_logoImg
+      partners.partner_logoImg,
+      partners.partner_name,
+      partners.partner_id
     FROM
       bookings
       INNER JOIN plans ON bookings.plan_id = plans.plan_id
