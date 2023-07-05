@@ -3,7 +3,10 @@ const {
     getProfile,
     updateProfile,
     getEnrichPoints,
-    addBooking
+    addBooking,
+    getBooking,
+    getOneBooking,
+    deleteBooking
 } = require('../controllers/customerDashboardController')
 const requireAuth = require('../middleware/requireAuth')
 
@@ -20,6 +23,10 @@ router.put('/profile', updateProfile)
 // Get Customer Enrich Points and Refund Tokens
 router.get('/enrich-points', getEnrichPoints)
 
+// Bookings
 router.post('/bookings', addBooking)
+router.get('/bookings',getBooking)
+router.get('/bookings/:id',getOneBooking)
+router.post('/bookings/:id', deleteBooking)
 
 module.exports = router
